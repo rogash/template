@@ -322,5 +322,3 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 - [Laravel Sail](https://laravel.com/docs/sail) - Docker para Laravel
 
 ---
-
-**Desenvolvido com ❤️ para a comunidade Laravel**
