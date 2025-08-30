@@ -102,12 +102,6 @@ if [ $? -eq 0 ]; then
         cp "$TEMPLATE_DIR/Makefile" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/pint.json" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/phpcs.xml" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/.eslintrc.js" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/.prettierrc" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/tsconfig.json" . 2>/dev/null || true
-        # Vite config será criado especificamente para Laravel
-        cp "$TEMPLATE_DIR/tailwind.config.js" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/postcss.config.js" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.editorconfig" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.cursorrules" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/CHANGELOG.md" . 2>/dev/null || true
@@ -133,7 +127,6 @@ if [ $? -eq 0 ]; then
     # Install dependencies
     echo -e "${BLUE}📦 Instalando dependências...${NC}"
     composer install --no-interaction
-    npm install
 
     # Create Laravel-specific configurations
     echo -e "${BLUE}⚙️  Criando configurações para Laravel...${NC}"
@@ -263,40 +256,8 @@ return (new PhpCsFixer\Config())
     ->setFinder($finder);
 EOF
 
-    # Create Vite config for Laravel
-    cat > vite.config.js << 'EOF'
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue';
-
-export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-        }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
-        }),
-    ],
-    resolve: {
-        alias: {
-            '@': '/resources/js',
-            '~': '/resources',
-        },
-    },
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
-});
-EOF
+    # Create basic Laravel configuration files
+    echo -e "${BLUE}⚙️  Criando configurações básicas para Laravel...${NC}"
 
     echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"
 

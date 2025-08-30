@@ -61,7 +61,6 @@ template/
 ├── docker/           # Configurações Docker
 ├── .github/          # GitHub Actions
 ├── composer.json     # Dependências das ferramentas (PHPStan, Psalm, etc.)
-├── package.json      # Dependências Node.js
 ├── phpstan.neon      # Configuração PHPStan para template
 ├── psalm.xml         # Configuração Psalm para template
 ├── .cursorrules      # Regras para IA
@@ -92,7 +91,6 @@ Se você quiser usar o template diretamente (não recomendado para produção):
 # Ou configure manualmente
 ./scripts/install-laravel.sh  # Instala Laravel 12
 composer install               # Instala dependências PHP
-npm install                    # Instala dependências Node.js
 cp .env.example .env          # Copia arquivo de ambiente
 php artisan key:generate      # Gera chave da aplicação
 ```

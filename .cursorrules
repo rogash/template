@@ -256,13 +256,11 @@ make build            # Compilar assets
 
 ### Arquivos de Configuração
 - `composer.json` - Dependências PHP
-- `package.json` - Dependências Node.js
 - `phpstan.neon` - Configuração PHPStan
 - `psalm.xml` - Configuração Psalm
 - `pint.json` - Configuração Laravel Pint
 - `phpcs.xml` - Configuração PSR-12
-- `.eslintrc.js` - Configuração ESLint
-- `tsconfig.json` - Configuração TypeScript
+- `.php-cs-fixer.php` - Configuração PHP CS Fixer
 
 ## ⚠️ Regras Importantes
 

@@ -2,6 +2,23 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
+## [2.2.0] - 2025-01-XX
+
+### 🧹 Simplificação do Template + Foco em Qualidade
+
+#### ✨ Novidades
+- **Template Simplificado** - Removidas dependências de frontend desnecessárias
+- **Foco em Qualidade PHP** - Template dedicado a ferramentas de qualidade
+- **Configurações Robustas** - PHPStan e Psalm configurados para funcionar em qualquer projeto
+- **Sem Complexidade Desnecessária** - Sem Vue, Tailwind, TypeScript no template
+
+#### 🔧 Mudanças Técnicas
+- **Removido**: package.json, vite.config.js, tailwind.config.js, tsconfig.json
+- **Removido**: Dependências Node.js e ferramentas de frontend
+- **Mantido**: Todas as ferramentas de qualidade PHP (PHPStan, Psalm, Pint, PHP CS Fixer)
+- **Corrigido**: Configurações PHPStan para funcionar em projetos criados
+- **Adicionado**: Arquivo .php-cs-fixer.php para o template
+
 ## [2.1.0] - 2025-08-30
 
 ### 🚀 Psalm de Volta + Melhorias

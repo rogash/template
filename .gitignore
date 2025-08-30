@@ -73,14 +73,11 @@ yarn.lock
 *.bak
 *.backup
 
-# Build artifacts
+# Build artifacts (quando necessário)
 /dist
 /build
 /public/build
 /public/dist
-
-# Vite
-.vite
 
 # PHP CS Fixer cache
 .php-cs-fixer.cache
