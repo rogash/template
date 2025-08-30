@@ -2,7 +2,7 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
-## [2.1.0] - 2025-01-07
+## [2.1.0] - 2025-08-30
 
 ### 🚀 Psalm de Volta + Melhorias
 
@@ -21,6 +21,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - Configuração psalm.xml otimizada
 - **LICENSE não copiada** - Permite projetos comerciais com licenças próprias
 - **Stability**: Mudado de `dev` para `stable` - apenas versões maduras
+- **CI/CD**: Corrigido GitHub Actions para usar package-lock.json e ferramentas Composer
 
 #### 📚 Documentação
 - README atualizado com duas abordagens de uso

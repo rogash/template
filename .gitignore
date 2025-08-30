@@ -62,7 +62,7 @@ composer.phar
 composer.lock
 
 # NPM
-package-lock.json
+# package-lock.json - NÃO IGNORAR no template (necessário para CI/CD)
 yarn.lock
 
 # Environment files
