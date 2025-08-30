@@ -17,7 +17,7 @@ Um template completo e moderno para desenvolvimento de aplicações Laravel com 
 - **PHP**: 8.4+
 - **Composer**: 2.6+
 - **Node.js**: 18+
-- **Docker & Docker Compose** (para Laravel Sail)
+- **Docker & Docker Compose** (opcional, para Laravel Sail)
 - **Git**: 2.30+
 
 ## 🚀 Instalação Rápida
@@ -30,21 +30,15 @@ cd <nome-do-projeto>
 
 ### 2. Configuração inicial
 ```bash
-# Copia arquivo de ambiente
-cp env.example .env
+# Execute o script de setup (instala Laravel 12 automaticamente)
+./scripts/setup.sh
 
-# Instala dependências
-composer install
-npm install
-
-# Gera chave da aplicação
-php artisan key:generate
-
-# Executa migrações
-php artisan migrate
-
-# Popula banco com dados de teste
-php artisan db:seed
+# Ou configure manualmente
+./scripts/install-laravel.sh  # Instala Laravel 12
+composer install               # Instala dependências PHP
+npm install                    # Instala dependências Node.js
+cp .env.example .env          # Copia arquivo de ambiente
+php artisan key:generate      # Gera chave da aplicação
 ```
 
 ### 3. Inicia o servidor

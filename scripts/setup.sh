@@ -49,6 +49,27 @@ else
     DOCKER_AVAILABLE=true
 fi
 
+# Check if Laravel is installed
+if [ ! -f "artisan" ]; then
+    echo -e "${YELLOW}⚠️  Laravel não está instalado. Instalando Laravel 12...${NC}"
+
+    # Run Laravel installation script
+    if [ -f "scripts/install-laravel.sh" ]; then
+        chmod +x scripts/install-laravel.sh
+        ./scripts/install-laravel.sh
+
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}❌ Erro ao instalar Laravel. Abortando setup.${NC}"
+            exit 1
+        fi
+    else
+        echo -e "${RED}❌ Script de instalação do Laravel não encontrado.${NC}"
+        exit 1
+    fi
+else
+    echo -e "${GREEN}✅ Laravel já está instalado${NC}"
+fi
+
 echo -e "\n${BLUE}📦 Instalando dependências do Composer...${NC}"
 composer install --no-interaction --prefer-dist
 
@@ -59,11 +80,11 @@ echo -e "\n${BLUE}🔧 Configurando ambiente...${NC}"
 
 # Copy environment file if it doesn't exist
 if [ ! -f .env ]; then
-    if [ -f env.example ]; then
-        cp env.example .env
-        echo -e "${GREEN}✅ Arquivo .env criado a partir de env.example${NC}"
+    if [ -f .env.example ]; then
+        cp .env.example .env
+        echo -e "${GREEN}✅ Arquivo .env criado a partir de .env.example${NC}"
     else
-        echo -e "${YELLOW}⚠️  Arquivo env.example não encontrado${NC}"
+        echo -e "${YELLOW}⚠️  Arquivo .env.example não encontrado${NC}"
     fi
 fi
 
@@ -74,13 +95,17 @@ if [ -f .env ]; then
 fi
 
 # Set proper permissions
-chmod -R 755 storage bootstrap/cache
-echo -e "${GREEN}✅ Permissões configuradas${NC}"
+if [ -d "storage" ] && [ -d "bootstrap/cache" ]; then
+    chmod -R 755 storage bootstrap/cache
+    echo -e "${GREEN}✅ Permissões configuradas${NC}"
+else
+    echo -e "${YELLOW}⚠️  Diretórios storage ou bootstrap/cache não encontrados${NC}"
+fi
 
 echo -e "\n${BLUE}🔍 Verificando qualidade do código...${NC}"
 
 # Run PHPStan
-if [ -f vendor/bin/phpstan ]; then
+if [ -f "vendor/bin/phpstan" ]; then
     echo -e "${BLUE}📋 Executando PHPStan...${NC}"
     ./vendor/bin/phpstan analyse --memory-limit=2G --no-progress || echo -e "${YELLOW}⚠️  PHPStan encontrou alguns problemas${NC}"
 else
@@ -88,7 +113,7 @@ else
 fi
 
 # Run Laravel Pint
-if [ -f vendor/bin/pint ]; then
+if [ -f "vendor/bin/pint" ]; then
     echo -e "${BLUE}📋 Executando Laravel Pint...${NC}"
     ./vendor/bin/pint --test || echo -e "${YELLOW}⚠️  Laravel Pint encontrou alguns problemas${NC}"
 else
