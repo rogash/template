@@ -1,5 +1,14 @@
 # 🚀 Template Laravel - Template para Desenvolvimento
 
+[![CI/CD Pipeline](https://github.com/rogash/template/workflows/CI/CD%20Pipeline%20-%20Template%20Laravel/badge.svg)](https://github.com/rogash/template/actions)
+[![PHPStan](https://img.shields.io/badge/PHPStan-Level%208-brightgreen.svg)](https://phpstan.org/)
+[![Psalm](https://img.shields.io/badge/Psalm-Error%20Level%204-blue.svg)](https://psalm.dev/)
+[![Laravel Pint](https://img.shields.io/badge/Laravel%20Pint-PSR--12%20Compliant-orange.svg)](https://laravel.com/docs/pint)
+[![PHP CS Fixer](https://img.shields.io/badge/PHP%20CS%20Fixer-PSR--12%20Ready-red.svg)](https://cs.symfony.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.4+-blue.svg)](https://php.net/)
+
 Um template completo e moderno para desenvolvimento de aplicações Laravel com as melhores práticas, ferramentas de qualidade de código e configurações otimizadas.
 
 ## ✨ Características
@@ -11,6 +20,17 @@ Um template completo e moderno para desenvolvimento de aplicações Laravel com 
 - **Formatação de Código** - Laravel Pint + PHP CS Fixer para PSR-12
 - **Testes** - PHPUnit configurado e pronto para uso
 - **Qualidade de Código** - Scripts automatizados para verificação de qualidade
+
+## 📊 Status do Projeto
+
+| Verificação | Status | Detalhes |
+|-------------|--------|----------|
+| **CI/CD Pipeline** | ![CI/CD](https://github.com/rogash/template/workflows/CI/CD%20Pipeline%20-%20Template%20Laravel/badge.svg) | Verificação automática de qualidade |
+| **PHPStan** | ![PHPStan](https://img.shields.io/badge/PHPStan-Level%208-brightgreen.svg) | Análise estática máxima rigor |
+| **Psalm** | ![Psalm](https://img.shields.io/badge/Psalm-Error%20Level%204-blue.svg) | Análise complementar robusta |
+| **Laravel Pint** | ![Pint](https://img.shields.io/badge/Laravel%20Pint-PSR--12%20Compliant-orange.svg) | Formatação automática PSR-12 |
+| **PHP CS Fixer** | ![CS Fixer](https://img.shields.io/badge/PHP%20CS%20Fixer-PSR--12%20Ready-red.svg) | Compliance PSR-12 |
+| **Segurança** | ![Security](https://img.shields.io/badge/Security-Audit%20Passed-brightgreen.svg) | Auditoria de dependências |
 
 ## 🛠️ Pré-requisitos
 
@@ -373,6 +393,18 @@ O script `create-project.sh` **não copia** automaticamente a LICENSE do templat
 - [Psalm](https://psalm.dev/) - Análise estática complementar
 - [Laravel Pint](https://laravel.com/docs/pint) - Formatação de código
 - [Laravel Sail](https://laravel.com/docs/sail) - Docker para Laravel
+
+## 🔄 Status das Dependências
+
+[![Dependabot](https://img.shields.io/badge/Dependabot-Enabled-brightgreen.svg)](https://dependabot.com/)
+[![Updates](https://img.shields.io/badge/Updates-Weekly-blue.svg)](https://github.com/rogash/template/pulls?q=is%3Apr+author%3Aapp%2Fdependabot)
+[![Security](https://img.shields.io/badge/Security-Automated-orange.svg)](https://github.com/rogash/template/security)
+
+O template é mantido automaticamente com:
+- **Atualizações semanais** de dependências PHP
+- **Verificação automática** de vulnerabilidades
+- **Pull Requests automáticos** para dependências desatualizadas
+- **Auditoria de segurança** contínua
 
 ---
 
