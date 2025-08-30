@@ -396,12 +396,11 @@ O script `create-project.sh` **não copia** automaticamente a LICENSE do templat
 
 ## 🔄 Status das Dependências
 
-[![Dependabot](https://img.shields.io/badge/Dependabot-Enabled-brightgreen.svg)](https://dependabot.com/)
-[![Updates](https://img.shields.io/badge/Updates-Weekly-blue.svg)](https://github.com/rogash/template/pulls?q=is%3Apr+author%3Aapp%2Fdependabot)
+[![Dependabot](https://img.shields.io/badge/Dependabot-Default-brightgreen.svg)](https://dependabot.com/)
 [![Security](https://img.shields.io/badge/Security-Automated-orange.svg)](https://github.com/rogash/template/security)
 
-O template é mantido automaticamente com:
-- **Atualizações semanais** de dependências PHP
+O template usa as configurações padrão do GitHub:
+- **Atualizações automáticas** de dependências
 - **Verificação automática** de vulnerabilidades
 - **Pull Requests automáticos** para dependências desatualizadas
 - **Auditoria de segurança** contínua
