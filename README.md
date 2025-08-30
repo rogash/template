@@ -34,8 +34,13 @@ cd meu-projeto
 # 2. Crie um novo projeto Laravel a partir do template
 ./scripts/create-project.sh
 
-# 3. Siga as instruções na tela
-# O script criará uma nova pasta com Laravel + todas as configurações do template
+# 3. Escolha onde criar o projeto:
+#    - Na pasta atual (dentro do template)
+#    - Em uma pasta específica (recomendado)
+#    - Em uma pasta pai (../)
+
+# 4. Siga as instruções na tela
+# O script criará o projeto no local escolhido com Laravel + todas as configurações
 ```
 
 **Vantagens desta abordagem:**

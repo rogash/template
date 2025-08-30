@@ -15,7 +15,7 @@ if ! command -v composer &> /dev/null; then
     exit 1
 fi
 
-# Get project name
+# Get project name and location
 read -p "Digite o nome do novo projeto: " PROJECT_NAME
 
 if [ -z "$PROJECT_NAME" ]; then
@@ -23,22 +23,53 @@ if [ -z "$PROJECT_NAME" ]; then
     exit 1
 fi
 
+# Get project location
+echo -e "${BLUE}📍 Onde você quer criar o projeto?${NC}"
+echo -e "${YELLOW}1.${NC} Na pasta atual (dentro do template)"
+echo -e "${YELLOW}2.${NC} Em uma pasta específica (recomendado)"
+echo -e "${YELLOW}3.${NC} Em uma pasta pai (../)"
+read -p "Escolha uma opção (1-3): " LOCATION_CHOICE
+
+case $LOCATION_CHOICE in
+    1)
+        PROJECT_PATH="$PROJECT_NAME"
+        echo -e "${BLUE}📁 Projeto será criado em: ${GREEN}$(pwd)/$PROJECT_NAME${NC}"
+        ;;
+    2)
+        read -p "Digite o caminho completo (ex: /caminho/para/projetos): " CUSTOM_PATH
+        if [ -z "$CUSTOM_PATH" ]; then
+            echo -e "${RED}❌ Caminho não pode ser vazio${NC}"
+            exit 1
+        fi
+        PROJECT_PATH="$CUSTOM_PATH/$PROJECT_NAME"
+        echo -e "${BLUE}📁 Projeto será criado em: ${GREEN}$PROJECT_PATH${NC}"
+        ;;
+    3)
+        PROJECT_PATH="../$PROJECT_NAME"
+        echo -e "${BLUE}📁 Projeto será criado em: ${GREEN}$(realpath $PROJECT_PATH)${NC}"
+        ;;
+    *)
+        echo -e "${RED}❌ Opção inválida${NC}"
+        exit 1
+        ;;
+esac
+
 # Check if project directory already exists
-if [ -d "$PROJECT_NAME" ]; then
-    echo -e "${YELLOW}⚠️  O diretório '$PROJECT_NAME' já existe.${NC}"
+if [ -d "$PROJECT_PATH" ]; then
+    echo -e "${YELLOW}⚠️  O diretório '$PROJECT_PATH' já existe.${NC}"
     read -p "Deseja sobrescrever? (y/N): " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}❌ Criação cancelada.${NC}"
         exit 1
     fi
-    rm -rf "$PROJECT_NAME"
+    rm -rf "$PROJECT_PATH"
 fi
 
 # Create project directory
 echo -e "${BLUE}📁 Criando diretório do projeto...${NC}"
-mkdir -p "$PROJECT_NAME"
-cd "$PROJECT_NAME"
+mkdir -p "$PROJECT_PATH"
+cd "$PROJECT_PATH"
 
 # Create new Laravel project
 echo -e "${BLUE}📦 Criando projeto Laravel 12...${NC}"
@@ -47,38 +78,50 @@ composer create-project laravel/laravel:^12.0 . --prefer-dist --no-interaction
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Laravel 12 criado com sucesso!${NC}"
 
-    # Copy template files from parent directory
+        # Copy template files from template directory
     echo -e "${BLUE}📋 Copiando arquivos do template...${NC}"
 
-    PARENT_DIR="$(dirname "$(pwd)")"
-    TEMPLATE_DIR="$(basename "$PARENT_DIR")"
+    # Find template directory (could be in different locations)
+    TEMPLATE_DIR=""
+    if [ -d "../../template" ]; then
+        TEMPLATE_DIR="../../template"
+    elif [ -d "../template" ]; then
+        TEMPLATE_DIR="../template"
+    elif [ -d "template" ]; then
+        TEMPLATE_DIR="template"
+    else
+        # Try to find template by looking for characteristic files
+        TEMPLATE_DIR="$(find .. -maxdepth 3 -name "phpstan.neon" -o -name ".cursorrules" | head -1 | xargs dirname 2>/dev/null || echo "")"
+    fi
 
-    if [ "$TEMPLATE_DIR" = "template" ]; then
-        # We're in the template directory, copy from current location
-        cp -r ../.git . 2>/dev/null || true
-        cp ../README.md . 2>/dev/null || true
-        cp ../Makefile . 2>/dev/null || true
-        cp ../phpstan.neon . 2>/dev/null || true
-        cp ../pint.json . 2>/dev/null || true
-        cp ../phpcs.xml . 2>/dev/null || true
-        cp ../.eslintrc.js . 2>/dev/null || true
-        cp ../.prettierrc . 2>/dev/null || true
-        cp ../tsconfig.json . 2>/dev/null || true
-        cp ../vite.config.js . 2>/dev/null || true
-        cp ../tailwind.config.js . 2>/dev/null || true
-        cp ../postcss.config.js . 2>/dev/null || true
-        cp ../.editorconfig . 2>/dev/null || true
-        cp ../.cursorrules . 2>/dev/null || true
-        cp ../CHANGELOG.md . 2>/dev/null || true
-        cp ../env.example .env.example 2>/dev/null || true
-        cp ../docker-compose.yml . 2>/dev/null || true
-        cp ../docker-compose.prod.yml . 2>/dev/null || true
+    if [ -n "$TEMPLATE_DIR" ] && [ -d "$TEMPLATE_DIR" ]; then
+        echo -e "${GREEN}✅ Template encontrado em: $TEMPLATE_DIR${NC}"
+
+        # Copy template files
+        cp -r "$TEMPLATE_DIR/.git" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/README.md" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/Makefile" . 2>/dev/null || true
+                cp "$TEMPLATE_DIR/phpstan.neon" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/pint.json" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/phpcs.xml" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/.eslintrc.js" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/.prettierrc" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/tsconfig.json" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/vite.config.js" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/tailwind.config.js" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/postcss.config.js" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/.editorconfig" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/.cursorrules" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/CHANGELOG.md" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/env.example" .env.example 2>/dev/null || true
+        cp "$TEMPLATE_DIR/docker-compose.yml" . 2>/dev/null || true
+        cp "$TEMPLATE_DIR/docker-compose.prod.yml" . 2>/dev/null || true
 
         # Copy directories
-        cp -r ../scripts . 2>/dev/null || true
-        cp -r ../docs . 2>/dev/null || true
-        cp -r ../docker . 2>/dev/null || true
-        cp -r ../.github . 2>/dev/null || true
+        cp -r "$TEMPLATE_DIR/scripts" . 2>/dev/null || true
+        cp -r "$TEMPLATE_DIR/docs" . 2>/dev/null || true
+        cp -r "$TEMPLATE_DIR/docker" . 2>/dev/null || true
+        cp -r "$TEMPLATE_DIR/.github" . 2>/dev/null || true
 
         echo -e "${GREEN}✅ Arquivos do template copiados${NC}"
     else
@@ -103,8 +146,9 @@ if [ $? -eq 0 ]; then
     chmod -R 755 storage bootstrap/cache
 
     echo -e "\n${GREEN}🎉 Projeto '$PROJECT_NAME' criado com sucesso!${NC}"
+    echo -e "${BLUE}📍 Localização: ${GREEN}$(pwd)${NC}"
     echo -e "${BLUE}🚀 Próximos passos:${NC}"
-    echo -e "1. Entre no diretório: ${GREEN}cd $PROJECT_NAME${NC}"
+    echo -e "1. Entre no diretório: ${GREEN}cd $PROJECT_PATH${NC}"
     echo -e "2. Configure o ambiente: ${GREEN}cp .env.example .env${NC}"
     echo -e "3. Configure o banco de dados no arquivo .env"
     echo -e "4. Execute as migrações: ${GREEN}php artisan migrate${NC}"

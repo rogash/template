@@ -18,7 +18,7 @@ setup: ## Configuração inicial do projeto
 	@echo "🚀 Configurando projeto..."
 	./scripts/setup.sh
 
-create-project: ## Cria um novo projeto Laravel a partir do template
+create-project: ## Cria um novo projeto Laravel a partir do template (escolha a localização)
 	@echo "🚀 Criando novo projeto..."
 	./scripts/create-project.sh
 

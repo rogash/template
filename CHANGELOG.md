@@ -11,6 +11,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **PHPStan 2.x** - Atualizado com Larastan 3.x para Laravel 12
 - **Análise Estática Dual** - PHPStan + Psalm para máxima cobertura
 - **Script create-project.sh** - Cria novos projetos a partir do template
+- **Localização Flexível** - Escolha onde criar o projeto (fora do template)
 - **Duas Abordagens de Uso** - Template como base ou instalação direta
 
 #### 🔧 Mudanças Técnicas
