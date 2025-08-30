@@ -12,7 +12,7 @@ cd <nome-do-projeto>
 ### 2. Configure o Ambiente
 ```bash
 # Copie o arquivo de ambiente
-cp env.example .env
+cp .env.example .env
 
 # Edite o .env com suas configurações
 nano .env
@@ -76,7 +76,6 @@ make sail-shell
 ```bash
 # Análise estática
 make stan          # PHPStan
-make psalm         # Psalm
 
 # Formatação
 make pint          # Laravel Pint

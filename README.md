@@ -7,7 +7,7 @@ Um template completo e moderno para desenvolvimento de aplicações Laravel com 
 - **Laravel 12** - Framework mais recente e estável
 - **PHP 8.4** - Última versão do PHP com todas as funcionalidades modernas
 - **Docker + Laravel Sail** - Ambiente de desenvolvimento isolado e reproduzível
-- **Análise Estática** - PHPStan + Psalm para detecção de bugs
+- **Análise Estática** - PHPStan para detecção de bugs
 - **Formatação de Código** - Laravel Pint + PHP CS Fixer para PSR-12
 - **Testes** - PHPUnit configurado e pronto para uso
 - **Qualidade de Código** - Scripts automatizados para verificação de qualidade
@@ -91,17 +91,6 @@ phpstan analyse --memory-limit=2G
 
 # Análise específica
 phpstan analyse app/Models
-```
-
-#### Psalm
-```bash
-# Análise completa
-make psalm
-# ou
-psalm
-
-# Análise com baseline
-psalm --update-baseline
 ```
 
 ### Formatação de Código
@@ -190,7 +179,6 @@ make build
 ├── docker-compose.yml    # Configuração Docker
 ├── Makefile              # Comandos úteis
 ├── phpstan.neon         # Configuração PHPStan
-├── psalm.xml            # Configuração Psalm
 ├── pint.json            # Configuração Laravel Pint
 └── phpcs.xml            # Configuração PHP_CodeSniffer
 ```
@@ -201,11 +189,6 @@ make build
 - **Level**: 8 (máximo rigor)
 - **Paths**: app, config, database, routes, tests
 - **Extensions**: Larastan para Laravel
-
-### Psalm
-- **Error Level**: 4 (equilibrado)
-- **Plugin**: Laravel
-- **Memory Limit**: 2GB
 
 ### Laravel Pint
 - **Preset**: Laravel
@@ -235,7 +218,6 @@ make quality
 
 # Ou individualmente
 make stan
-make psalm
 make pint
 make test
 ```
@@ -311,8 +293,9 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 - [Laravel Team](https://laravel.com/) - Framework incrível
 - [PHPStan](https://phpstan.org/) - Análise estática
-- [Psalm](https://psalm.dev/) - Análise adicional
 - [Laravel Pint](https://laravel.com/docs/pint) - Formatação de código
 - [Laravel Sail](https://laravel.com/docs/sail) - Docker para Laravel
 
 ---
+
+**Desenvolvido com ❤️ para a comunidade Laravel**

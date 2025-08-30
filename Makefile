@@ -1,4 +1,4 @@
-.PHONY: help install setup test quality stan psalm pint cs-fix cs-check sail-up sail-down sail-build sail-shell sail-test sail-artisan
+.PHONY: help install setup test quality stan pint cs-fix cs-check sail-up sail-down sail-build sail-shell sail-test sail-artisan
 
 help: ## Mostra esta ajuda
 	@echo "Comandos disponíveis:"
@@ -9,7 +9,7 @@ install: ## Instala as dependências do projeto
 	npm install
 
 setup: ## Configura o projeto para desenvolvimento
-	cp env.example .env
+	cp .env.example .env
 	composer install
 	php artisan key:generate
 	php artisan migrate
@@ -26,7 +26,6 @@ test-coverage: ## Executa os testes com cobertura
 quality: ## Executa todas as verificações de qualidade
 	@echo "🔍 Executando verificações de qualidade..."
 	@make stan
-	@make psalm
 	@make pint
 	@make cs-check
 	@make test
@@ -35,10 +34,6 @@ quality: ## Executa todas as verificações de qualidade
 stan: ## Executa análise estática com PHPStan
 	@echo "🔍 Executando PHPStan..."
 	phpstan analyse --memory-limit=2G
-
-psalm: ## Executa análise estática com Psalm
-	@echo "🔍 Executando Psalm..."
-	psalm
 
 pint: ## Formata o código com Laravel Pint
 	@echo "🎨 Formatando código com Pint..."
