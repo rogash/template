@@ -1,0 +1,42 @@
+# CODEOWNERS
+# Este arquivo define quem é responsável por revisar código em diferentes áreas
+
+# Proprietários principais do template (você e sua equipe)
+* @rogash
+
+# Configurações de qualidade de código
+/phpstan.neon @rogash
+/psalm.xml @rogash
+/pint.json @rogash
+/phpcs.xml @rogash
+/.php-cs-fixer.php @rogash
+
+# Scripts de automação
+/scripts/ @rogash
+/Makefile @rogash
+
+# Configurações Docker
+/docker/ @rogash
+/docker-compose.yml @rogash
+/docker-compose.prod.yml @rogash
+
+# Documentação
+/docs/ @rogash
+/README.md @rogash
+/CHANGELOG.md @rogash
+/QUICKSTART.md @rogash
+
+# Configurações de desenvolvimento
+/.github/ @rogash
+/.editorconfig @rogash
+/.cursorrules @rogash
+
+# Dependências e configurações
+/composer.json @rogash
+/composer.lock @rogash
+
+# Testes
+/tests/ @rogash
+
+# Configurações de IDE
+/.vscode/ @rogash

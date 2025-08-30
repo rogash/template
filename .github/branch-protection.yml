@@ -1,0 +1,161 @@
+# Branch Protection Configuration
+# Este arquivo define as regras de proteção para branches importantes
+
+# Proteção da branch principal (main/master)
+main:
+  # Status de aplicação: habilitado
+  enforcement_status: enabled
+
+  # Lista de bypass (vazia por padrão para máxima segurança)
+  bypass_list: []
+
+  # Branches de destino
+  target_branches:
+    - pattern: "main"
+    - pattern: "master"
+
+  # Regras de proteção
+  rules:
+    # Restringir criações - apenas admins podem criar branches
+    restrict_creations: true
+
+    # Restringir atualizações - apenas admins podem fazer push direto
+    restrict_updates: true
+
+    # Restringir exclusões - apenas admins podem deletar
+    restrict_deletions: true
+
+    # Exigir histórico linear - sem merge commits
+    require_linear_history: true
+
+    # Exigir que verificações de status passem
+    require_status_checks:
+      strict: true
+      contexts:
+        - "PHPStan Analysis"
+        - "Psalm Analysis"
+        - "Code Style Check"
+        - "Tests"
+
+    # Exigir revisão de código
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+      require_last_push_approval: true
+
+    # Restringir pushes que criam branches
+    restrict_pushes:
+      allowed_actors:
+        - "repository_owner"
+        - "repository_admin"
+
+    # Configurações adicionais
+    allow_force_pushes: false
+    allow_deletions: false
+    block_creations: true
+
+    # Notificações
+    notify_on_push: true
+    notify_on_review: true
+
+# Proteção para branches de desenvolvimento
+develop:
+  enforcement_status: enabled
+  bypass_list: []
+  target_branches:
+    - pattern: "develop"
+    - pattern: "dev/*"
+
+  rules:
+    restrict_creations: false
+    restrict_updates: true
+    restrict_deletions: true
+    require_linear_history: false
+    require_status_checks:
+      strict: false
+      contexts:
+        - "PHPStan Analysis"
+        - "Tests"
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+      dismiss_stale_reviews: true
+    allow_force_pushes: false
+    allow_deletions: false
+
+# Proteção para branches de feature
+feature:
+  enforcement_status: enabled
+  bypass_list: []
+  target_branches:
+    - pattern: "feature/*"
+    - pattern: "feat/*"
+
+  rules:
+    restrict_creations: false
+    restrict_updates: false
+    restrict_deletions: false
+    require_linear_history: false
+    require_status_checks:
+      strict: false
+      contexts:
+        - "Tests"
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+    allow_force_pushes: true
+    allow_deletions: true
+
+# Proteção para branches de hotfix
+hotfix:
+  enforcement_status: enabled
+  bypass_list: []
+  target_branches:
+    - pattern: "hotfix/*"
+    - pattern: "fix/*"
+
+  rules:
+    restrict_creations: true
+    restrict_updates: true
+    restrict_deletions: true
+    require_linear_history: true
+    require_status_checks:
+      strict: true
+      contexts:
+        - "PHPStan Analysis"
+        - "Psalm Analysis"
+        - "Code Style Check"
+        - "Tests"
+    required_pull_request_reviews:
+      required_approving_review_count: 2
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+    allow_force_pushes: false
+    allow_deletions: false
+
+# Proteção para branches de release
+release:
+  enforcement_status: enabled
+  bypass_list: []
+  target_branches:
+    - pattern: "release/*"
+    - pattern: "v*"
+
+  rules:
+    restrict_creations: true
+    restrict_updates: true
+    restrict_deletions: true
+    require_linear_history: true
+    require_status_checks:
+      strict: true
+      contexts:
+        - "PHPStan Analysis"
+        - "Psalm Analysis"
+        - "Code Style Check"
+        - "Tests"
+        - "Security Scan"
+    required_pull_request_reviews:
+      required_approving_review_count: 2
+      dismiss_stale_reviews: true
+      require_code_owner_reviews: true
+    allow_force_pushes: false
+    allow_deletions: false
