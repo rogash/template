@@ -87,7 +87,7 @@ if [ $? -eq 0 ]; then
 
     # Update composer.json with template dependencies
     echo -e "${BLUE}📦 Atualizando dependências do template...${NC}"
-    composer require --dev phpstan/phpstan nunomaduro/larastan friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility --no-interaction
+    composer require --dev phpstan/phpstan larastan/larastan friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility --no-interaction
 
     # Install dependencies
     echo -e "${BLUE}📦 Instalando dependências...${NC}"

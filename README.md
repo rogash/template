@@ -213,10 +213,11 @@ make build
 ### PHPStan
 - **Level**: 8 (máximo rigor)
 - **Paths**: app, config, database, routes, tests
-- **Extensions**: Larastan para Laravel
+- **Extensions**: Larastan (larastan/larastan) para Laravel
 
 ### Psalm
 - **Error Level**: 4 (rigoroso)
+- **Version**: 6.13 (estável e madura)
 - **Paths**: app, config, database, routes, tests
 - **Plugin**: Laravel Plugin para suporte específico
 

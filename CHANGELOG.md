@@ -15,11 +15,12 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 #### 🔧 Mudanças Técnicas
 - PHPStan atualizado da v1.x para v2.x
-- Larastan atualizado da v2.x para v3.x
-- Psalm retornado com versão 7.x-dev
+- **Larastan**: Migrado de `nunomaduro/larastan` (abandonado) para `larastan/larastan` (ativo)
+- **Psalm**: Versão estável 6.13 (compatível PHP 8.4) em vez de 7.x-dev
 - Makefile adicionado comando `psalm` e `create-project`
 - Configuração psalm.xml otimizada
 - **LICENSE não copiada** - Permite projetos comerciais com licenças próprias
+- **Stability**: Mudado de `dev` para `stable` - apenas versões maduras
 
 #### 📚 Documentação
 - README atualizado com duas abordagens de uso

@@ -208,6 +208,7 @@ class UserService
 
 **Configuração**: `phpstan.neon`
 **Level**: 8 (máximo rigor)
+**Extensão**: Larastan (larastan/larastan) para Laravel
 
 ```bash
 # Análise completa
@@ -224,6 +225,7 @@ phpstan analyse --configuration=phpstan.neon app/
 
 **Configuração**: `psalm.xml`
 **Error Level**: 4 (equilibrado)
+**Version**: 6.13 (estável e madura)
 
 ```bash
 # Análise completa

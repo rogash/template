@@ -137,7 +137,8 @@ class User extends Model
 
 ### Análise Estática
 - **PHPStan**: Level 8 (máximo rigor) - **PRINCIPAL FERRAMENTA**
-- **Psalm**: Error Level 4 (rigoroso) - **FERRAMENTA COMPLEMENTAR**
+- **Larastan**: Extensão PHPStan para Laravel (larastan/larastan)
+- **Psalm**: Error Level 4, versão 6.13 (estável) - **FERRAMENTA COMPLEMENTAR**
 - **Laravel Pint**: Formatação automática
 - **PHP CS Fixer**: PSR-12 compliance
 
