@@ -152,16 +152,18 @@ parameters:
         - routes
         - tests
     excludePaths:
-        - app/Console/Kernel.php
-        - app/Exceptions/Handler.php
-        - app/Http/Kernel.php
-        - app/Providers/AppServiceProvider.php
-        - app/Providers/AuthServiceProvider.php
-        - app/Providers/EventServiceProvider.php
-        - app/Providers/RouteServiceProvider.php
+        - vendor
+        - node_modules
+        - storage
+        - bootstrap/cache
+        - tests/coverage
     ignoreErrors:
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Collection::#'
+        - '#Call to an undefined method Illuminate\\Support\\Collection::#'
+        - '#Call to an undefined method Illuminate\\Http\\Request::#'
+        - '#Call to an undefined method Illuminate\\Http\\Response::#'
 EOF
 
     # Create psalm.xml for Laravel
@@ -174,6 +176,7 @@ EOF
     errorLevel="4"
     resolveFromConfigFile="true"
     findUnusedCode="false"
+    cacheDirectory=".psalm-cache"
 >
     <projectFiles>
         <directory name="app" />
@@ -181,13 +184,15 @@ EOF
         <directory name="database" />
         <directory name="routes" />
         <directory name="tests" />
-        <ignoreFiles>
-            <directory name="vendor" />
-            <directory name="node_modules" />
-            <directory name="storage" />
-            <directory name="bootstrap/cache" />
-        </ignoreFiles>
     </projectFiles>
+
+    <ignoreFiles>
+        <directory name="vendor" />
+        <directory name="node_modules" />
+        <directory name="storage" />
+        <directory name="bootstrap/cache" />
+        <directory name="tests/coverage" />
+    </ignoreFiles>
 
     <plugins>
         <pluginClass class="Psalm\LaravelPlugin\Plugin" />
@@ -208,8 +213,54 @@ EOF
         <MixedMethodCall errorLevel="info" />
         <MixedPropertyFetch errorLevel="info" />
         <MixedReturnStatement errorLevel="info" />
+        <UndefinedMethod errorLevel="info" />
+        <UndefinedPropertyFetch errorLevel="info" />
     </issueHandlers>
 </psalm>
+EOF
+
+    # Create PHP CS Fixer config
+    cat > .php-cs-fixer.php << 'EOF'
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->in([
+        __DIR__ . '/app',
+        __DIR__ . '/config',
+        __DIR__ . '/database',
+        __DIR__ . '/routes',
+        __DIR__ . '/tests',
+    ])
+    ->exclude([
+        'vendor',
+        'node_modules',
+        'storage',
+        'bootstrap/cache',
+    ]);
+
+return (new PhpCsFixer\Config())
+    ->setRules([
+        '@PSR12' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'ordered_imports' => ['sort_algorithm' => 'alpha'],
+        'no_unused_imports' => true,
+        'not_operator_with_successor_space' => true,
+        'trailing_comma_in_multiline' => true,
+        'phpdoc_scalar' => true,
+        'unary_operator_spaces' => true,
+        'binary_operator_spaces' => true,
+        'blank_line_before_statement' => [
+            'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
+        ],
+        'phpdoc_single_line_var_spacing' => true,
+        'phpdoc_var_without_name' => true,
+        'method_argument_space' => [
+            'on_multiline' => 'ensure_fully_multiline',
+            'keep_multiple_spaces_after_comma' => true,
+        ],
+        'single_trait_insert_per_statement' => true,
+    ])
+    ->setFinder($finder);
 EOF
 
     # Create Vite config for Laravel

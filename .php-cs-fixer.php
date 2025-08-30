@@ -7,10 +7,14 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__ . '/docker',
         __DIR__ . '/.github',
     ])
-    ->name('*.php')
-    ->notName('*.blade.php')
-    ->ignoreDotFiles(true)
-    ->ignoreVCS(true);
+    ->exclude([
+        'vendor',
+        'node_modules',
+        'storage',
+        'bootstrap/cache',
+        'dist',
+        'build',
+    ]);
 
 return (new PhpCsFixer\Config())
     ->setRules([
