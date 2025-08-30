@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="4"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
+    memoryLimit="2G"
+>
+    <projectFiles>
+        <directory name="app"/>
+        <directory name="config"/>
+        <directory name="database"/>
+        <directory name="routes"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="storage"/>
+            <directory name="bootstrap/cache"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <plugins>
+        <pluginClass class="Psalm\Plugin\Laravel\LaravelPlugin"/>
+    </plugins>
+
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <directory name="app/Console"/>
+                <directory name="app/Exceptions"/>
+                <directory name="app/Http"/>
+                <directory name="app/Providers"/>
+            </errorLevel>
+        </UndefinedClass>
+    </issueHandlers>
+</psalm>

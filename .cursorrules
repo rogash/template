@@ -1,0 +1,379 @@
+# 🚀 Cursor Rules - Template Laravel 12
+
+## 📋 Visão Geral
+Este arquivo define as regras e melhores práticas para desenvolvimento com este template Laravel 12, incluindo padrões de código, estrutura de arquivos e ferramentas de qualidade.
+
+## 🏗️ Estrutura do Projeto
+
+### Diretórios Principais
+- `app/` - Código da aplicação Laravel
+- `config/` - Arquivos de configuração
+- `database/` - Migrações, seeders, factories
+- `routes/` - Definição de rotas
+- `storage/` - Arquivos gerados pela aplicação
+- `tests/` - Testes automatizados
+- `resources/` - Views, assets, linguagens
+- `public/` - Arquivos públicos
+
+### Padrões de Nomenclatura
+- **Controllers**: `UserController`, `PostController` (sufixo Controller)
+- **Models**: `User`, `Post`, `Comment` (singular, PascalCase)
+- **Services**: `UserService`, `EmailService` (sufixo Service)
+- **Repositories**: `UserRepository`, `PostRepository` (sufixo Repository)
+- **Requests**: `UserRequest`, `PostRequest` (sufixo Request)
+- **Resources**: `UserResource`, `PostResource` (sufixo Resource)
+
+## 📝 Padrões de Código
+
+### PHP (Laravel)
+- **Padrão**: PSR-12 estritamente
+- **Indentação**: 4 espaços
+- **Chaves**: Na mesma linha para classes e métodos
+- **Tipagem**: Sempre usar type hints e return types
+- **Propriedades**: Usar `readonly` quando possível
+- **Construtor**: Usar constructor property promotion
+
+### Exemplo de Controller
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\UserRequest;
+use App\Models\User;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
+
+class UserController extends Controller
+{
+    public function __construct(
+        private readonly UserService $userService
+    ) {}
+
+    public function index(): JsonResponse
+    {
+        $users = $this->userService->getAllUsers();
+
+        return response()->json($users);
+    }
+
+    public function store(UserRequest $request): JsonResponse
+    {
+        $user = $this->userService->createUser($request->validated());
+
+        return response()->json($user, 201);
+    }
+}
+```
+
+### Exemplo de Service
+```php
+<?php
+
+namespace App\Services;
+
+use App\Models\User;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Hash;
+
+class UserService
+{
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {}
+
+    public function createUser(array $data): User
+    {
+        $data['password'] = Hash::make($data['password']);
+
+        return $this->userRepository->create($data);
+    }
+}
+```
+
+### Exemplo de Model
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class User extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+}
+```
+
+## 🔍 Ferramentas de Qualidade
+
+### Análise Estática
+- **PHPStan**: Level 8 (máximo rigor)
+- **Psalm**: Error Level 4 (equilibrado)
+- **Laravel Pint**: Formatação automática
+- **PHP CS Fixer**: PSR-12 compliance
+
+### Comandos de Qualidade
+```bash
+# Verificação completa
+make quality
+
+# Análise estática
+make stan          # PHPStan
+make psalm         # Psalm
+
+# Formatação
+make pint          # Laravel Pint
+make cs-check      # Verificar PSR-12
+make cs-fix        # Corrigir PSR-12
+```
+
+## 🧪 Testes
+
+### Estrutura de Testes
+- **Feature Tests**: `tests/Feature/` - Testes de funcionalidade
+- **Unit Tests**: `tests/Unit/` - Testes unitários
+- **Database**: Usar `RefreshDatabase` trait
+- **Factories**: Criar factories para todos os models
+
+### Exemplo de Teste
+```php
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class UserTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_can_create_user(): void
+    {
+        $userData = [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ];
+
+        $response = $this->postJson('/api/users', $userData);
+
+        $response->assertStatus(201)
+                ->assertJsonStructure([
+                    'id',
+                    'name',
+                    'email',
+                    'created_at',
+                ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'john@example.com',
+        ]);
+    }
+}
+```
+
+## 🐳 Docker e Ambiente
+
+### Laravel Sail
+- **Comando**: `./vendor/bin/sail`
+- **Alias**: `make sail-up`, `make sail-down`
+- **Portas**: 80 (Laravel), 3306 (MySQL), 6379 (Redis)
+
+### Serviços Disponíveis
+- Laravel: http://localhost
+- MySQL: localhost:3306
+- Redis: localhost:6379
+- Meilisearch: http://localhost:7700
+- Mailpit: http://localhost:8025
+
+## 🚀 Desenvolvimento
+
+### Workflow Recomendado
+1. **Setup**: `./scripts/setup.sh`
+2. **Desenvolvimento**: `make sail-up` + `make watch`
+3. **Antes do Commit**: `make quality`
+4. **Testes**: `make test`
+
+### Comandos Essenciais
+```bash
+# Setup inicial
+./scripts/setup.sh
+
+# Desenvolvimento
+make sail-up          # Iniciar Docker
+make watch            # Hot reload
+make quality          # Verificar qualidade
+
+# Testes
+make test             # Executar testes
+make test-coverage    # Com cobertura
+
+# Deploy
+make optimize         # Otimizar para produção
+make build            # Compilar assets
+```
+
+## 📚 Recursos e Documentação
+
+### Links Úteis
+- [Laravel 12 Documentation](https://laravel.com/docs)
+- [PHPStan Documentation](https://phpstan.org/)
+- [Psalm Documentation](https://psalm.dev/)
+- [Laravel Pint](https://laravel.com/docs/pint)
+- [Laravel Sail](https://laravel.com/docs/sail)
+
+### Arquivos de Configuração
+- `composer.json` - Dependências PHP
+- `package.json` - Dependências Node.js
+- `phpstan.neon` - Configuração PHPStan
+- `psalm.xml` - Configuração Psalm
+- `pint.json` - Configuração Laravel Pint
+- `phpcs.xml` - Configuração PSR-12
+- `.eslintrc.js` - Configuração ESLint
+- `tsconfig.json` - Configuração TypeScript
+
+## ⚠️ Regras Importantes
+
+### ❌ NÃO FAZER
+- Não commitar arquivos `.env`
+- Não commitar `vendor/` ou `node_modules/`
+- Não usar `DB::raw()` sem sanitização
+- Não deixar queries N+1
+- Não commitar código não formatado
+- **NÃO COMMITAR AUTOMATICAMENTE** - Sempre revisar antes
+- **NÃO FAZER PUSH AUTOMATICAMENTE** - Sempre verificar qualidade primeiro
+
+### ✅ SEMPRE FAZER
+- Executar `make quality` antes do commit
+- Usar type hints e return types
+- Seguir PSR-12 estritamente
+- Escrever testes para novas funcionalidades
+- Documentar métodos complexos
+- Usar dependency injection
+- **REVISAR CÓDIGO** antes de commitar
+- **EXECUTAR TESTES** antes de fazer push
+- **VERIFICAR QUALIDADE** com ferramentas configuradas
+
+### 🔧 Boas Práticas
+- **SOLID Principles**: Aplicar sempre que possível
+- **Repository Pattern**: Para acesso a dados
+- **Service Layer**: Para lógica de negócio
+- **Form Requests**: Para validação
+- **API Resources**: Para transformação de dados
+- **Events & Listeners**: Para ações assíncronas
+- **Jobs & Queues**: Para tarefas pesadas
+
+## 🚫 Controle de Versão - REGRAS CRÍTICAS
+
+### ⚠️ NUNCA AUTOMATIZAR
+- **Commits automáticos** são PROIBIDOS
+- **Push automático** é PROIBIDO
+- **Deploy automático** sem revisão é PROIBIDO
+
+### 🔒 Processo Obrigatório
+1. **Desenvolver** funcionalidade
+2. **Executar** `make quality` para verificar qualidade
+3. **Executar** `make test` para verificar testes
+4. **Revisar** código manualmente
+5. **Commitar** com mensagem descritiva
+6. **Fazer push** apenas após revisão completa
+
+### 🌍 Idioma dos Commits
+- **OBRIGATÓRIO**: Todos os commits devem ser em **PORTUGUÊS BRASILEIRO (pt-BR)**
+- **NÃO USAR**: Inglês, espanhol ou outros idiomas
+- **PADRÃO**: Usar verbos no infinitivo e linguagem técnica em português
+
+### 📝 Mensagens de Commit
+```bash
+# Formato correto (pt-BR)
+git commit -m "feat: adiciona autenticação de usuários
+
+- Implementa sistema de login/logout
+- Adiciona middleware de autenticação
+- Cria testes para funcionalidades
+- Atualiza documentação"
+
+# Formato incorreto (inglês)
+git commit -m "feat: add user authentication"  # ❌ NÃO USAR INGLÊS
+
+# Formato incorreto (vago)
+git commit -m "fix"  # ❌ Muito vago
+git commit -m "updates"  # ❌ Não descritivo
+```
+
+### 📚 Exemplos de Commits em Português
+```bash
+# Funcionalidades
+git commit -m "feat: implementa sistema de notificações por email"
+git commit -m "feat: adiciona dashboard administrativo"
+git commit -m "feat: cria API para gerenciamento de produtos"
+
+# Correções
+git commit -m "fix: corrige validação de CPF no formulário"
+git commit -m "fix: resolve problema de cache no Redis"
+git commit -m "fix: ajusta timezone para horário de Brasília"
+
+# Melhorias
+git commit -m "perf: otimiza consultas do banco de dados"
+git commit -m "refactor: reorganiza estrutura de diretórios"
+git commit -m "style: aplica formatação PSR-12"
+
+# Documentação
+git commit -m "docs: atualiza README com instruções de instalação"
+git commit -m "docs: adiciona comentários no código"
+git commit -m "docs: cria guia de deploy para produção"
+```
+
+## 🎯 Dicas de Produtividade
+
+### IDE Setup
+- **PHPStorm**: Laravel Plugin + PHPStan
+- **VS Code**: PHP Intelephense + Laravel Snippets
+- **Vim/Neovim**: ALE + PHPStan
+
+### Extensões Recomendadas
+- PHP Intelephense
+- Laravel Blade Snippets
+- PHP Debug
+- PHP CS Fixer
+- Tailwind CSS IntelliSense
+
+### Atalhos Úteis
+- `make help` - Ver todos os comandos
+- `make quality` - Verificação completa
+- `make fresh` - Recriar banco
+- `make cache-clear` - Limpar caches
+
+---
+
+**🎉 Lembre-se: Qualidade de código é prioridade! Sempre execute `make quality` antes de commitar.**
+
+**🚫 IMPORTANTE: NUNCA commite ou faça push automaticamente. Sempre revise e verifique a qualidade do código primeiro!**
+
+**🇧🇷 OBRIGATÓRIO: Todos os commits devem ser em PORTUGUÊS BRASILEIRO (pt-BR)!**
