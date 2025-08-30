@@ -132,6 +132,7 @@ class User extends Model
 
 ### Análise Estática
 - **PHPStan**: Level 8 (máximo rigor) - **PRINCIPAL FERRAMENTA**
+- **Psalm**: Error Level 4 (rigoroso) - **FERRAMENTA COMPLEMENTAR**
 - **Laravel Pint**: Formatação automática
 - **PHP CS Fixer**: PSR-12 compliance
 
@@ -142,6 +143,7 @@ make quality
 
 # Análise estática
 make stan          # PHPStan
+make psalm         # Psalm
 
 # Formatação
 make pint          # Laravel Pint
@@ -242,6 +244,7 @@ make build            # Compilar assets
 ### Links Úteis
 - [Laravel 12 Documentation](https://laravel.com/docs)
 - [PHPStan Documentation](https://phpstan.org/)
+- [Psalm Documentation](https://psalm.dev/)
 - [Laravel Pint](https://laravel.com/docs/pint)
 - [Laravel Sail](https://laravel.com/docs/sail)
 
@@ -249,6 +252,7 @@ make build            # Compilar assets
 - `composer.json` - Dependências PHP
 - `package.json` - Dependências Node.js
 - `phpstan.neon` - Configuração PHPStan
+- `psalm.xml` - Configuração Psalm
 - `pint.json` - Configuração Laravel Pint
 - `phpcs.xml` - Configuração PSR-12
 - `.eslintrc.js` - Configuração ESLint

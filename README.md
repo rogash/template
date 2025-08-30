@@ -7,7 +7,7 @@ Um template completo e moderno para desenvolvimento de aplicações Laravel com 
 - **Laravel 12** - Framework mais recente e estável
 - **PHP 8.4** - Última versão do PHP com todas as funcionalidades modernas
 - **Docker + Laravel Sail** - Ambiente de desenvolvimento isolado e reproduzível
-- **Análise Estática** - PHPStan para detecção de bugs
+- **Análise Estática** - PHPStan + Psalm para detecção de bugs
 - **Formatação de Código** - Laravel Pint + PHP CS Fixer para PSR-12
 - **Testes** - PHPUnit configurado e pronto para uso
 - **Qualidade de Código** - Scripts automatizados para verificação de qualidade
@@ -20,17 +20,36 @@ Um template completo e moderno para desenvolvimento de aplicações Laravel com 
 - **Docker & Docker Compose** (opcional, para Laravel Sail)
 - **Git**: 2.30+
 
-## 🚀 Instalação Rápida
+## 🚀 Como Usar o Template
 
-### 1. Clone o repositório
+### **Opção 1: Usar como Base para Novos Projetos (RECOMENDADA)**
+
+Este template foi projetado para ser usado como **base para novos projetos**. É a abordagem mais limpa e profissional:
+
 ```bash
-git clone <seu-repositorio>
-cd <nome-do-projeto>
+# 1. Clone o template
+git clone <url-do-template> meu-projeto
+cd meu-projeto
+
+# 2. Crie um novo projeto Laravel a partir do template
+./scripts/create-project.sh
+
+# 3. Siga as instruções na tela
+# O script criará uma nova pasta com Laravel + todas as configurações do template
 ```
 
-### 2. Configuração inicial
+**Vantagens desta abordagem:**
+- ✅ Mantém o template intacto para reutilização
+- ✅ Cria projetos limpos e organizados
+- ✅ Preserva histórico do Git
+- ✅ Fácil de manter e atualizar
+
+### **Opção 2: Instalar Laravel no Template Atual**
+
+Se você quiser usar o template diretamente (não recomendado para produção):
+
 ```bash
-# Execute o script de setup (instala Laravel 12 automaticamente)
+# Execute o script de setup (instala Laravel 12 no diretório atual)
 ./scripts/setup.sh
 
 # Ou configure manualmente
@@ -41,14 +60,7 @@ cp .env.example .env          # Copia arquivo de ambiente
 php artisan key:generate      # Gera chave da aplicação
 ```
 
-### 3. Inicia o servidor
-```bash
-# Desenvolvimento local
-php artisan serve
-
-# Ou com Docker (recomendado)
-./vendor/bin/sail up -d
-```
+**⚠️ Atenção:** Esta opção modifica o template original.
 
 ## 🐳 Usando Laravel Sail (Docker)
 
@@ -91,6 +103,17 @@ phpstan analyse --memory-limit=2G
 
 # Análise específica
 phpstan analyse app/Models
+```
+
+#### Psalm
+```bash
+# Análise completa
+make psalm
+# ou
+./vendor/bin/psalm --no-progress
+
+# Análise específica
+./vendor/bin/psalm app/Models
 ```
 
 ### Formatação de Código
@@ -158,7 +181,7 @@ make watch
 make build
 ```
 
-## 🏗️ Estrutura do Projeto
+## ��️ Estrutura do Projeto
 
 ```
 ├── app/                    # Código da aplicação
@@ -179,6 +202,7 @@ make build
 ├── docker-compose.yml    # Configuração Docker
 ├── Makefile              # Comandos úteis
 ├── phpstan.neon         # Configuração PHPStan
+├── psalm.xml            # Configuração Psalm
 ├── pint.json            # Configuração Laravel Pint
 └── phpcs.xml            # Configuração PHP_CodeSniffer
 ```
@@ -189,6 +213,11 @@ make build
 - **Level**: 8 (máximo rigor)
 - **Paths**: app, config, database, routes, tests
 - **Extensions**: Larastan para Laravel
+
+### Psalm
+- **Error Level**: 4 (rigoroso)
+- **Paths**: app, config, database, routes, tests
+- **Plugin**: Laravel Plugin para suporte específico
 
 ### Laravel Pint
 - **Preset**: Laravel
@@ -218,6 +247,7 @@ make quality
 
 # Ou individualmente
 make stan
+make psalm
 make pint
 make test
 ```
@@ -293,6 +323,7 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 - [Laravel Team](https://laravel.com/) - Framework incrível
 - [PHPStan](https://phpstan.org/) - Análise estática
+- [Psalm](https://psalm.dev/) - Análise estática complementar
 - [Laravel Pint](https://laravel.com/docs/pint) - Formatação de código
 - [Laravel Sail](https://laravel.com/docs/sail) - Docker para Laravel
 

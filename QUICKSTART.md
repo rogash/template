@@ -1,36 +1,64 @@
 # 🚀 Quick Start - Template Laravel
 
-## ⚡ Início Rápido
+Guia rápido para começar com o template Laravel em minutos!
 
-### 1. Clone e Setup
+## 🎯 **Escolha sua Abordagem**
+
+### **🚀 Opção 1: Criar Novo Projeto (RECOMENDADA)**
+
 ```bash
-git clone <seu-repositorio>
-cd <nome-do-projeto>
+# 1. Clone o template
+git clone <url-do-template> meu-projeto
+cd meu-projeto
+
+# 2. Crie um novo projeto Laravel
+./scripts/create-project.sh
+
+# 3. Siga as instruções na tela
+# O script criará uma nova pasta com Laravel + template
+```
+
+**✅ Vantagens:**
+- Template permanece intacto
+- Projeto limpo e organizado
+- Fácil de reutilizar
+
+### **⚠️ Opção 2: Usar Template Diretamente**
+
+```bash
+# Clone e configure no diretório atual
+git clone <url-do-template> .
 ./scripts/setup.sh
 ```
 
-### 2. Configure o Ambiente
+**⚠️ Atenção:** Modifica o template original.
+
+## 🔧 **Configuração Rápida**
+
+### **1. Ambiente**
 ```bash
-# Copie o arquivo de ambiente
+# Copia arquivo de ambiente
 cp .env.example .env
 
-# Edite o .env com suas configurações
-nano .env
-
-# Gere a chave da aplicação
+# Gera chave da aplicação
 php artisan key:generate
 ```
 
-### 3. Banco de Dados
+### **2. Banco de Dados**
 ```bash
-# Execute as migrações
-php artisan migrate
+# Configura .env com suas credenciais
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=seu_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
 
-# Popule com dados de teste
-php artisan db:seed
+# Executa migrações
+php artisan migrate
 ```
 
-### 4. Inicie o Servidor
+### **3. Inicia o Servidor**
 ```bash
 # Desenvolvimento local
 php artisan serve
@@ -39,77 +67,78 @@ php artisan serve
 ./vendor/bin/sail up -d
 ```
 
-## 🎯 Comandos Essenciais
+## 🐳 **Docker (Laravel Sail)**
 
-### Desenvolvimento
 ```bash
-# Ver todos os comandos disponíveis
-make help
+# Inicia todos os serviços
+./vendor/bin/sail up -d
 
-# Verificação de qualidade completa
-make quality
-
-# Formatar código
-make pint
-
-# Executar testes
-make test
-```
-
-### Docker (Laravel Sail)
-```bash
-# Iniciar serviços
-make sail-up
-
-# Parar serviços
-make sail-down
+# Para os serviços
+./vendor/bin/sail down
 
 # Shell do container
-make sail-shell
+./vendor/bin/sail shell
 
-# Comandos Artisan via Docker
+# Comandos Artisan
 ./vendor/bin/sail artisan migrate
-./vendor/bin/sail test
 ```
 
-### Qualidade de Código
+## 🔍 **Ferramentas de Qualidade**
+
+### **Verificação Completa**
+```bash
+# Todas as verificações
+make quality
+```
+
+### **Individualmente**
 ```bash
 # Análise estática
 make stan          # PHPStan
+make psalm         # Psalm
 
 # Formatação
 make pint          # Laravel Pint
 make cs-check      # Verificar PSR-12
 make cs-fix        # Corrigir PSR-12
+
+# Testes
+make test          # PHPUnit
 ```
 
-## 🌐 Acessos
+## 📚 **Comandos Essenciais**
 
-- **Aplicação**: http://localhost
+```bash
+# Ver todos os comandos
+make help
+
+# Setup inicial
+make setup
+
+# Desenvolvimento
+make watch         # Hot reload
+make build         # Compilar assets
+
+# Cache
+make cache-clear   # Limpar cache
+make optimize      # Otimizar produção
+```
+
+## 🌐 **Acessos**
+
+- **Laravel**: http://localhost
 - **MySQL**: localhost:3306
 - **Redis**: localhost:6379
 - **Meilisearch**: http://localhost:7700
 - **Mailpit**: http://localhost:8025
 
-## 📚 Documentação Completa
+## 📖 **Documentação**
 
-- [Guia de Desenvolvimento](docs/DEVELOPMENT.md)
-- [Guia de Deploy](docs/DEPLOYMENT.md)
-- [README Principal](README.md)
-
-## 🆘 Precisa de Ajuda?
-
-```bash
-# Ver comandos disponíveis
-make help
-
-# Executar setup automático
-./scripts/setup.sh
-
-# Verificar qualidade
-make quality
-```
+- **README.md** - Documentação completa
+- **docs/DEVELOPMENT.md** - Guia para desenvolvedores
+- **docs/DEPLOYMENT.md** - Guia de deploy
+- **CHANGELOG.md** - Histórico de mudanças
 
 ---
 
-**🎉 Boa programação com Laravel!**
+**🎉 Pronto! Seu projeto Laravel está configurado com todas as melhores práticas!**

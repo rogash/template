@@ -2,6 +2,37 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
+## [2.1.0] - 2025-01-07
+
+### 🚀 Psalm de Volta + Melhorias
+
+#### ✨ Novidades
+- **Psalm 7.x** - De volta com suporte completo para PHP 8.4
+- **PHPStan 2.x** - Atualizado com Larastan 3.x para Laravel 12
+- **Análise Estática Dual** - PHPStan + Psalm para máxima cobertura
+- **Script create-project.sh** - Cria novos projetos a partir do template
+- **Duas Abordagens de Uso** - Template como base ou instalação direta
+
+#### 🔧 Mudanças Técnicas
+- PHPStan atualizado da v1.x para v2.x
+- Larastan atualizado da v2.x para v3.x
+- Psalm retornado com versão 7.x-dev
+- Makefile adicionado comando `psalm` e `create-project`
+- Configuração psalm.xml otimizada
+
+#### 📚 Documentação
+- README atualizado com duas abordagens de uso
+- QUICKSTART com instruções claras
+- .cursorrules atualizado com Psalm
+- Documentação complementar sobre Psalm
+
+#### 🐛 Correções
+- Compatibilidade entre Psalm e PHP 8.4 resolvida
+- Dependências conflitantes corrigidas
+- Scripts de setup melhorados
+
+---
+
 ## [2.0.0] - 2025-08-30
 
 ### 🚀 Atualização para Laravel 12
@@ -31,7 +62,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 #### 🧪 Testes e Qualidade
 - PHPStan configurado para Laravel 12
-- Psalm atualizado
+- Psalm 7.x com suporte para PHP 8.4
 - Laravel Pint otimizado
 - PSR-12 mantido como padrão
 

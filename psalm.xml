@@ -1,38 +1,47 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="4"
-    resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    findUnusedBaselineEntry="true"
+    errorLevel="4"
+    resolveFromConfigFile="true"
+    cacheDirectory="storage/psalm"
+    findUnusedVariablesAndParams="true"
     findUnusedCode="false"
-    memoryLimit="2G"
 >
     <projectFiles>
-        <directory name="app"/>
-        <directory name="config"/>
-        <directory name="database"/>
-        <directory name="routes"/>
+        <directory name="app" />
+        <directory name="config" />
+        <directory name="database" />
+        <directory name="routes" />
+        <directory name="tests" />
         <ignoreFiles>
-            <directory name="vendor"/>
-            <directory name="storage"/>
-            <directory name="bootstrap/cache"/>
+            <directory name="vendor" />
+            <directory name="node_modules" />
+            <directory name="storage" />
+            <directory name="bootstrap/cache" />
         </ignoreFiles>
     </projectFiles>
 
     <plugins>
-        <pluginClass class="Psalm\Plugin\Laravel\LaravelPlugin"/>
+        <pluginClass class="Psalm\LaravelPlugin\Plugin" />
     </plugins>
 
     <issueHandlers>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <directory name="app/Console"/>
-                <directory name="app/Exceptions"/>
-                <directory name="app/Http"/>
-                <directory name="app/Providers"/>
-            </errorLevel>
-        </UndefinedClass>
+        <LessSpecificReturnType errorLevel="info" />
+        <MoreSpecificReturnType errorLevel="info" />
+        <MissingReturnType errorLevel="info" />
+        <MissingPropertyType errorLevel="info" />
+        <InvalidDocblock errorLevel="info" />
+        <MissingDependency errorLevel="info" />
+        <DeprecatedMethod errorLevel="info" />
+        <UndefinedGlobalVariable errorLevel="suppress" />
+        <MixedAssignment errorLevel="info" />
+        <MixedArgument errorLevel="info" />
+        <MixedArrayAccess errorLevel="info" />
+        <MixedMethodCall errorLevel="info" />
+        <MixedPropertyFetch errorLevel="info" />
+        <MixedReturnStatement errorLevel="info" />
+        <MixedInferredReturnType errorLevel="info" />
     </issueHandlers>
 </psalm>
