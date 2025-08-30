@@ -26,8 +26,8 @@ fi
 # Get project location
 echo -e "${BLUE}📍 Onde você quer criar o projeto?${NC}"
 echo -e "${YELLOW}1.${NC} Na pasta atual (dentro do template)"
-echo -e "${YELLOW}2.${NC} Em uma pasta específica (recomendado)"
-echo -e "${YELLOW}3.${NC} Em uma pasta pai (../)"
+echo -e "${YELLOW}2.${NC} Em uma pasta específica"
+echo -e "${YELLOW}3.${NC} Em uma pasta pai (../) - (recomendado)"
 read -p "Escolha uma opção (1-3): " LOCATION_CHOICE
 
 case $LOCATION_CHOICE in
@@ -98,13 +98,11 @@ if [ $? -eq 0 ]; then
         echo -e "${GREEN}✅ Template encontrado em: $TEMPLATE_DIR${NC}"
 
         # Copy template files (excluding .git for clean repository)
-        cp "$TEMPLATE_DIR/README.md" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/Makefile" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/pint.json" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/phpcs.xml" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.editorconfig" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.cursorrules" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/CHANGELOG.md" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/env.example" .env.example 2>/dev/null || true
         cp "$TEMPLATE_DIR/docker-compose.yml" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/docker-compose.prod.yml" . 2>/dev/null || true
@@ -368,6 +366,103 @@ laravel-12: ## Verifica versão do Laravel
 EOF
 
     echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"
+
+    # Create generic README.md for the new project
+    echo -e "${BLUE}📝 Criando README.md genérico...${NC}"
+    cat > README.md << EOF
+# $PROJECT_NAME
+
+Seu README aqui.
+
+## Instalação
+
+\`\`\`bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+\`\`\`
+
+## Desenvolvimento
+
+\`\`\`bash
+make sail-up
+make quality
+make test
+\`\`\`
+EOF
+
+    # Create generic CHANGELOG.md for the new project
+    echo -e "${BLUE}📝 Criando CHANGELOG.md genérico...${NC}"
+    cat > CHANGELOG.md << EOF
+# 📋 Changelog
+
+Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
+
+## [0.0.1] - $(date +%Y-%m-%d)
+
+### 🚀 Projeto Iniciado
+
+#### ✨ Inicialização
+- **Projeto criado** - $PROJECT_NAME iniciado com sucesso
+- **Template base** - Utilizando template Laravel 12 otimizado
+- **Estrutura inicial** - Arquitetura base configurada e funcional
+
+#### 🏗️ Configurações Iniciais
+- **Laravel 12** - Framework mais recente e estável instalado
+- **PHP 8.4** - Suporte à versão mais recente do PHP
+- **Docker + Laravel Sail** - Ambiente de desenvolvimento isolado configurado
+- **Análise Estática** - PHPStan + Psalm para detecção de bugs
+- **Formatação de Código** - Laravel Pint + PHP CS Fixer para PSR-12
+- **Testes** - PHPUnit configurado e pronto para uso
+- **Qualidade de Código** - Scripts automatizados para verificação de qualidade
+- **Git** - Repositório inicializado com commit inicial
+
+#### 🔧 Ferramentas Integradas
+- **PHPStan Level 8** - Análise estática máxima rigor
+- **Psalm Error Level 4** - Análise complementar robusta
+- **Laravel Pint** - Formatação automática de código
+- **PHP CS Fixer** - Compliance PSR-12
+- **Makefile** - Comandos úteis para desenvolvimento
+- **Docker Compose** - Ambiente de desenvolvimento reproduzível
+
+#### 📁 Estrutura do Projeto
+- **app/** - Código da aplicação Laravel
+- **config/** - Arquivos de configuração
+- **database/** - Migrações, seeders, factories
+- **routes/** - Definição de rotas
+- **tests/** - Testes automatizados
+- **docker/** - Configurações Docker
+- **scripts/** - Scripts de automação
+- **docs/** - Documentação do projeto
+
+---
+
+## 📝 Formato do Changelog
+
+Este projeto segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
+
+### Tipos de Mudanças
+- **✨ Adicionado** - Novas funcionalidades
+- **🔧 Alterado** - Mudanças em funcionalidades existentes
+- **🐛 Corrigido** - Correções de bugs
+- **🚀 Melhorado** - Melhorias de performance
+- **📚 Documentação** - Atualizações na documentação
+- **🧪 Testes** - Mudanças relacionadas a testes
+- **🐳 Docker** - Mudanças relacionadas ao Docker
+- **🚀 CI/CD** - Mudanças relacionadas ao pipeline
+
+### Versões
+- **0.0.x** - Versões de desenvolvimento e inicialização
+- **1.0.0** - Primeira versão estável
+- **x.y.z** - Versões semânticas (Major.Minor.Patch)
+
+---
+
+**Para mais detalhes sobre as mudanças, consulte os commits do Git.**
+EOF
+
+    echo -e "${GREEN}✅ README.md e CHANGELOG.md genéricos criados${NC}"
 
     # Generate application key
     echo -e "${BLUE}🔑 Gerando chave da aplicação...${NC}"
