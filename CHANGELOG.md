@@ -19,6 +19,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - Psalm retornado com versão 7.x-dev
 - Makefile adicionado comando `psalm` e `create-project`
 - Configuração psalm.xml otimizada
+- **LICENSE não copiada** - Permite projetos comerciais com licenças próprias
 
 #### 📚 Documentação
 - README atualizado com duas abordagens de uso

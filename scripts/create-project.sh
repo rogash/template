@@ -57,7 +57,6 @@ if [ $? -eq 0 ]; then
         # We're in the template directory, copy from current location
         cp -r ../.git . 2>/dev/null || true
         cp ../README.md . 2>/dev/null || true
-        cp ../LICENSE . 2>/dev/null || true
         cp ../Makefile . 2>/dev/null || true
         cp ../phpstan.neon . 2>/dev/null || true
         cp ../pint.json . 2>/dev/null || true

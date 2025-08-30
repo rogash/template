@@ -43,6 +43,7 @@ cd meu-projeto
 - ✅ Cria projetos limpos e organizados
 - ✅ Preserva histórico do Git
 - ✅ Fácil de manter e atualizar
+- ✅ **Permite licenças próprias** - LICENSE não é copiada automaticamente
 
 ### **Opção 2: Instalar Laravel no Template Atual**
 
@@ -318,6 +319,17 @@ make cache-clear
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+### ⚖️ Sobre Licenças em Novos Projetos
+
+**Importante**: Quando você cria um novo projeto usando este template:
+
+- ✅ **Template**: Mantém a licença MIT
+- ✅ **Novos Projetos**: Podem ter suas próprias licenças
+- ✅ **Comercial**: Permite projetos proprietários e comerciais
+- ✅ **Flexibilidade**: Escolha a licença que melhor se adequa ao seu projeto
+
+O script `create-project.sh` **não copia** automaticamente a LICENSE do template, permitindo que você defina a licença apropriada para seu projeto.
 
 ## 🙏 Agradecimentos
 

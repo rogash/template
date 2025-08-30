@@ -22,6 +22,7 @@ cd meu-projeto
 - Template permanece intacto
 - Projeto limpo e organizado
 - Fácil de reutilizar
+- **Permite licenças próprias** (LICENSE não é copiada)
 
 ### **⚠️ Opção 2: Usar Template Diretamente**
 

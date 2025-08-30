@@ -15,6 +15,11 @@ Este arquivo define as regras e melhores práticas para desenvolvimento com este
 - `resources/` - Views, assets, linguagens
 - `public/` - Arquivos públicos
 
+### 📄 Licenças
+- **Template**: MIT License (código aberto)
+- **Novos Projetos**: Podem ter licenças próprias
+- **Comercial**: Suporte completo para projetos proprietários
+
 ### Padrões de Nomenclatura
 - **Controllers**: `UserController`, `PostController` (sufixo Controller)
 - **Models**: `User`, `Post`, `Comment` (singular, PascalCase)
