@@ -128,7 +128,7 @@ if [ $? -eq 0 ]; then
 
     # Install template dependencies
     echo -e "${BLUE}📦 Instalando dependências do template...${NC}"
-    composer require --dev phpstan/phpstan larastan/larastan vimeo/psalm psalm/plugin-laravel friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility --no-interaction
+    composer require --dev phpstan/phpstan larastan/larastan vimeo/psalm psalm/plugin-laravel friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility laravel/dusk nunomaduro/collision --no-interaction
 
     # Install dependencies
     echo -e "${BLUE}📦 Instalando dependências...${NC}"
