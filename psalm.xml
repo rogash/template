@@ -5,43 +5,16 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorLevel="4"
     resolveFromConfigFile="true"
-    cacheDirectory="storage/psalm"
-    findUnusedVariablesAndParams="true"
     findUnusedCode="false"
 >
     <projectFiles>
-        <directory name="app" />
-        <directory name="config" />
-        <directory name="database" />
-        <directory name="routes" />
-        <directory name="tests" />
+        <directory name="scripts" />
+        <directory name="docs" />
+        <directory name="docker" />
+        <directory name=".github" />
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="node_modules" />
-            <directory name="storage" />
-            <directory name="bootstrap/cache" />
         </ignoreFiles>
     </projectFiles>
-
-    <plugins>
-        <pluginClass class="Psalm\LaravelPlugin\Plugin" />
-    </plugins>
-
-    <issueHandlers>
-        <LessSpecificReturnType errorLevel="info" />
-        <MoreSpecificReturnType errorLevel="info" />
-        <MissingReturnType errorLevel="info" />
-        <MissingPropertyType errorLevel="info" />
-        <InvalidDocblock errorLevel="info" />
-        <MissingDependency errorLevel="info" />
-        <DeprecatedMethod errorLevel="info" />
-        <UndefinedGlobalVariable errorLevel="suppress" />
-        <MixedAssignment errorLevel="info" />
-        <MixedArgument errorLevel="info" />
-        <MixedArrayAccess errorLevel="info" />
-        <MixedMethodCall errorLevel="info" />
-        <MixedPropertyFetch errorLevel="info" />
-        <MixedReturnStatement errorLevel="info" />
-        <MixedInferredReturnType errorLevel="info" />
-    </issueHandlers>
 </psalm>

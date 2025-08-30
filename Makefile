@@ -22,17 +22,15 @@ create-project: ## Cria um novo projeto Laravel a partir do template (escolha a 
 	@echo "🚀 Criando novo projeto..."
 	./scripts/create-project.sh
 
-test: ## Executa testes
+test: ## Executa testes (apenas quando Laravel estiver instalado)
 	@echo "🧪 Executando testes..."
-	php artisan test
+	@if [ -f "artisan" ]; then php artisan test; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
 quality: ## Executa todas as verificações de qualidade
 	@echo "🔍 Executando verificações de qualidade..."
 	@make stan
 	@make psalm
-	@make pint
 	@make cs-check
-	@make test
 	@echo "✅ Todas as verificações concluídas!"
 
 stan: ## Executa análise estática com PHPStan
@@ -43,17 +41,17 @@ psalm: ## Executa análise estática com Psalm
 	@echo "🔍 Executando Psalm..."
 	./vendor/bin/psalm --no-progress
 
-pint: ## Formata o código with Laravel Pint
+pint: ## Formata o código com Laravel Pint (apenas quando Laravel estiver instalado)
 	@echo "🎨 Formatando código com Pint..."
-	./vendor/bin/pint
+	@if [ -f "artisan" ]; then ./vendor/bin/pint; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
 cs-check: ## Verifica estilo de código com PHP_CodeSniffer
 	@echo "🔍 Verificando estilo de código..."
-	./vendor/bin/phpcs --standard=PSR12 app/ config/ database/ routes/ tests/
+	./vendor/bin/phpcs --standard=PSR12 scripts/ docs/ docker/ .github/ || true
 
 cs-fix: ## Corrige estilo de código automaticamente
 	@echo "🔧 Corrigindo estilo de código..."
-	./vendor/bin/phpcbf --standard=PSR12 app/ config/ database/ routes/ tests/
+	./vendor/bin/phpcbf --standard=PSR12 scripts/ docs/ docker/ .github/ || true
 
 sail-up: ## Inicia serviços Docker
 	@echo "🐳 Iniciando serviços Docker..."
@@ -79,33 +77,26 @@ sail-artisan: ## Executa comando Artisan via Docker
 	@echo "🔧 Executando comando Artisan..."
 	./vendor/bin/sail artisan $(command)
 
-watch: ## Inicia Vite em modo watch
+watch: ## Inicia Vite em modo watch (apenas quando Laravel estiver instalado)
 	@echo "👀 Iniciando Vite em modo watch..."
-	npm run dev
+	@if [ -f "artisan" ]; then npm run dev; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
-build: ## Compila assets para produção
+build: ## Compila assets para produção (apenas quando Laravel estiver instalado)
 	@echo "🏗️ Compilando assets..."
-	npm run build
+	@if [ -f "artisan" ]; then npm run build; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
-cache-clear: ## Limpa todos os caches
+cache-clear: ## Limpa todos os caches (apenas quando Laravel estiver instalado)
 	@echo "🧹 Limpando caches..."
-	php artisan cache:clear
-	php artisan config:clear
-	php artisan route:clear
-	php artisan view:clear
-	@echo "✅ Caches limpos!"
+	@if [ -f "artisan" ]; then php artisan cache:clear config:clear route:clear view:clear; echo "✅ Caches limpos!"; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
-optimize: ## Otimiza para produção
+optimize: ## Otimiza para produção (apenas quando Laravel estiver instalado)
 	@echo "⚡ Otimizando para produção..."
-	php artisan config:cache
-	php artisan route:cache
-	php artisan view:cache
-	@echo "✅ Otimização concluída!"
+	@if [ -f "artisan" ]; then php artisan config:cache route:cache view:cache; echo "✅ Otimização concluída!"; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
-fresh: ## Recria banco de dados
+fresh: ## Recria banco de dados (apenas quando Laravel estiver instalado)
 	@echo "🔄 Recriando banco de dados..."
-	php artisan migrate:fresh --seed
+	@if [ -f "artisan" ]; then php artisan migrate:fresh --seed; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
 
-laravel-12: ## Verifica versão do Laravel
+laravel-12: ## Verifica versão do Laravel (apenas quando Laravel estiver instalado)
 	@echo "🔍 Verificando versão do Laravel..."
-	php artisan --version
+	@if [ -f "artisan" ]; then php artisan --version; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi

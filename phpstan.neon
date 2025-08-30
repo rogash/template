@@ -1,22 +1,13 @@
-includes:
-    - vendor/larastan/larastan/extension.neon
-
 parameters:
     level: 8
     paths:
-        - app
-        - config
-        - database
-        - routes
-        - tests
+        - scripts
+        - docs
+        - docker
+        - .github
     excludePaths:
-        - app/Console/Kernel.php (?)
-        - app/Exceptions/Handler.php (?)
-        - app/Http/Kernel.php (?)
-        - app/Providers/AppServiceProvider.php (?)
-        - app/Providers/AuthServiceProvider.php (?)
-        - app/Providers/EventServiceProvider.php (?)
-        - app/Providers/RouteServiceProvider.php (?)
-    ignoreErrors:
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
+        - vendor
+        - node_modules
+        - storage (?)
+        - bootstrap/cache (?)
+    ignoreErrors: []

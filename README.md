@@ -50,6 +50,30 @@ cd meu-projeto
 - ✅ Fácil de manter e atualizar
 - ✅ **Permite licenças próprias** - LICENSE não é copiada automaticamente
 
+### **📋 Estrutura do Template**
+
+O template **NÃO contém** o Laravel instalado, apenas as configurações e ferramentas:
+
+```
+template/
+├── scripts/           # Scripts de criação de projetos
+├── docs/             # Documentação
+├── docker/           # Configurações Docker
+├── .github/          # GitHub Actions
+├── composer.json     # Dependências das ferramentas (PHPStan, Psalm, etc.)
+├── package.json      # Dependências Node.js
+├── phpstan.neon      # Configuração PHPStan
+├── psalm.xml         # Configuração Psalm
+├── .cursorrules      # Regras para IA
+└── README.md         # Esta documentação
+```
+
+**✅ Vantagens:**
+- Template limpo e organizado
+- Fácil de manter e atualizar
+- Não interfere com projetos criados
+- Permite reutilização infinita
+
 ### **Opção 2: Instalar Laravel no Template Atual**
 
 Se você quiser usar o template diretamente (não recomendado para produção):

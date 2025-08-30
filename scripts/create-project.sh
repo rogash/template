@@ -128,9 +128,9 @@ if [ $? -eq 0 ]; then
         echo -e "${YELLOW}⚠️  Não foi possível detectar o diretório do template${NC}"
     fi
 
-    # Update composer.json with template dependencies
-    echo -e "${BLUE}📦 Atualizando dependências do template...${NC}"
-    composer require --dev phpstan/phpstan larastan/larastan friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility --no-interaction
+    # Install template dependencies
+    echo -e "${BLUE}📦 Instalando dependências do template...${NC}"
+    composer require --dev phpstan/phpstan larastan/larastan vimeo/psalm psalm/plugin-laravel friendsofphp/php-cs-fixer squizlabs/php_codesniffer phpcompatibility/php-compatibility --no-interaction
 
     # Install dependencies
     echo -e "${BLUE}📦 Instalando dependências...${NC}"
