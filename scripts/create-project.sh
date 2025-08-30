@@ -146,10 +146,8 @@ parameters:
         - tests
     excludePaths:
         - vendor
-        - node_modules
         - storage
         - bootstrap/cache
-        - tests/coverage
     ignoreErrors:
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
@@ -181,10 +179,8 @@ EOF
 
     <ignoreFiles>
         <directory name="vendor" />
-        <directory name="node_modules" />
         <directory name="storage" />
         <directory name="bootstrap/cache" />
-        <directory name="tests/coverage" />
     </ignoreFiles>
 
     <plugins>
@@ -226,7 +222,6 @@ $finder = PhpCsFixer\Finder::create()
     ])
     ->exclude([
         'vendor',
-        'node_modules',
         'storage',
         'bootstrap/cache',
     ]);
@@ -258,6 +253,125 @@ EOF
 
     # Create basic Laravel configuration files
     echo -e "${BLUE}⚙️  Criando configurações básicas para Laravel...${NC}"
+
+    # Create a more robust phpcs.xml that works in any Laravel project
+    cat > phpcs.xml << 'EOF'
+<?xml version="1.0"?>
+<ruleset name="PSR12">
+    <description>PSR-12 Laravel Project</description>
+
+    <file>app/</file>
+    <file>config/</file>
+    <file>database/</file>
+    <file>routes/</file>
+    <file>tests/</file>
+
+    <rule ref="PSR12"/>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="p"/>
+    <arg value="s"/>
+    <arg value="n"/>
+</ruleset>
+EOF
+
+    # Create a Makefile specifically for the created project
+    cat > Makefile << 'EOF'
+.PHONY: help test quality stan psalm pint cs-fix cs-check sail-up sail-down sail-build sail-shell sail-test sail-artisan cache-clear optimize fresh laravel-12
+
+help: ## Mostra esta ajuda
+	@echo "🚀 Laravel Project - Comandos Disponíveis"
+	@echo ""
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "📚 Para mais informações, consulte o README.md"
+
+test: ## Executa testes
+	@echo "🧪 Executando testes..."
+	php artisan test
+
+quality: ## Executa todas as verificações de qualidade
+	@echo "🔍 Executando verificações de qualidade..."
+	@make stan
+	@make psalm
+	@make cs-check
+	@echo "✅ Todas as verificações concluídas!"
+
+stan: ## Executa análise estática com PHPStan
+	@echo "🔍 Executando PHPStan..."
+	./vendor/bin/phpstan analyse --memory-limit=2G
+
+psalm: ## Executa análise estática com Psalm
+	@echo "🔍 Executando Psalm..."
+	./vendor/bin/psalm --no-progress
+
+pint: ## Formata o código com Laravel Pint
+	@echo "🎨 Formatando código com Pint..."
+	./vendor/bin/pint
+
+cs-check: ## Verifica estilo de código
+	@echo "🔍 Verificando estilo de código..."
+	./vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.php
+	./vendor/bin/phpcs --standard=PSR12 app config database routes tests || true
+
+cs-fix: ## Corrige estilo de código automaticamente
+	@echo "🔧 Corrigindo estilo de código..."
+	./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php
+	./vendor/bin/phpcbf --standard=PSR12 app config database routes tests || true
+
+sail-up: ## Inicia serviços Docker
+	@echo "🐳 Iniciando serviços Docker..."
+	./vendor/bin/sail up -d
+
+sail-down: ## Para serviços Docker
+	@echo "🐳 Parando serviços Docker..."
+	./vendor/bin/sail down
+
+sail-build: ## Reconstrói containers Docker
+	@echo "🐳 Reconstruindo containers..."
+	./vendor/bin/sail build --no-cache
+
+sail-shell: ## Acessa shell do container
+	@echo "🐳 Acessando shell do container..."
+	./vendor/bin/sail shell
+
+sail-test: ## Executa testes via Docker
+	@echo "🧪 Executando testes via Docker..."
+	./vendor/bin/sail test
+
+sail-artisan: ## Executa comando Artisan via Docker
+	@echo "🔧 Executando comando Artisan..."
+	./vendor/bin/sail artisan $(command)
+
+cache-clear: ## Limpa todos os caches
+	@echo "🧹 Limpando caches..."
+	php artisan cache:clear config:clear route:clear view:clear
+	@echo "✅ Caches limpos!"
+
+optimize: ## Otimiza para produção
+	@echo "⚡ Otimizando para produção..."
+	php artisan config:cache route:cache view:cache
+	@echo "✅ Otimização concluída!"
+
+fresh: ## Recria banco de dados
+	@echo "🔄 Recriando banco de dados..."
+	php artisan migrate:fresh --seed
+
+laravel-12: ## Verifica versão do Laravel
+	@echo "🔍 Verificando versão do Laravel..."
+	php artisan --version
+EOF
 
     echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"
 
