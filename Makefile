@@ -47,10 +47,12 @@ pint: ## Formata o código com Laravel Pint (apenas quando Laravel estiver insta
 
 cs-check: ## Verifica estilo de código com PHP_CodeSniffer
 	@echo "🔍 Verificando estilo de código..."
+	./vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.php
 	./vendor/bin/phpcs --standard=PSR12 scripts/ docs/ docker/ .github/ || true
 
 cs-fix: ## Corrige estilo de código automaticamente
 	@echo "🔧 Corrigindo estilo de código..."
+	./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php
 	./vendor/bin/phpcbf --standard=PSR12 scripts/ docs/ docker/ .github/ || true
 
 sail-up: ## Inicia serviços Docker

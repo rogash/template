@@ -34,17 +34,17 @@
         ],
 
         "cs-check": [
-            "./vendor/bin/php-cs-fixer fix --dry-run --diff",
+            "./vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.php",
             "./vendor/bin/phpcs --standard=PSR12 scripts docs docker .github"
         ],
         "cs-fix": [
-            "./vendor/bin/php-cs-fixer fix",
+            "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
             "./vendor/bin/phpcbf --standard=PSR12 scripts docs docker .github"
         ],
         "quality": [
             "@php ./vendor/bin/phpstan analyse --memory-limit=2G",
             "@php ./vendor/bin/psalm --no-progress",
-            "./vendor/bin/php-cs-fixer fix --dry-run --diff",
+            "./vendor/bin/php-cs-fixer fix --dry-run --diff --config=.php-cs-fixer.php",
             "./vendor/bin/phpcs --standard=PSR12 scripts docs docker .github"
         ]
     }
