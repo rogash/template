@@ -72,3 +72,60 @@ yarn.lock
 # Backup files
 *.bak
 *.backup
+
+# Build artifacts
+/dist
+/build
+/public/build
+/public/dist
+
+# Vite
+.vite
+
+# PHP CS Fixer cache
+.php-cs-fixer.cache
+
+# PHPStan cache
+.phpstan.result.cache
+
+# Psalm cache
+.psalm-cache
+
+# Laravel Pint cache
+.pint-cache
+
+# Docker
+.dockerignore
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Storage symlinks
+/public/storage
+/storage/app/public
+
+# Queue workers
+/storage/logs/queue.log
+
+# Session files
+/storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+
+# View cache
+/storage/framework/views/*
+!storage/framework/views/.gitkeep
+
+# Cache files
+/storage/framework/cache/*
+!storage/framework/cache/.gitkeep
+
+# Testing artifacts
+/tests/coverage
+/.phpunit.cache
+
+# Backup and temporary
+*.orig
+*.rej
+*.sublime-*
