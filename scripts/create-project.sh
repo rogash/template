@@ -367,6 +367,14 @@ EOF
 
     echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"
 
+    # Get Laravel version dynamically
+    LARAVEL_VERSION=$(php artisan --version | grep -o 'Laravel Framework [0-9.]*' | cut -d' ' -f3)
+    if [ -z "$LARAVEL_VERSION" ]; then
+        LARAVEL_VERSION="Laravel"
+    else
+        LARAVEL_VERSION="Laravel $LARAVEL_VERSION"
+    fi
+
     # Create generic README.md for the new project
     echo -e "${BLUE}📝 Criando README.md genérico...${NC}"
     cat > README.md << EOF
@@ -390,6 +398,10 @@ make sail-up
 make quality
 make test
 \`\`\`
+
+---
+
+*Projeto criado com $LARAVEL_VERSION*
 EOF
 
     # Create generic CHANGELOG.md for the new project
@@ -405,11 +417,11 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 #### ✨ Inicialização
 - **Projeto criado** - $PROJECT_NAME iniciado com sucesso
-- **Template base** - Utilizando template Laravel 12 otimizado
+- **Template base** - Utilizando template $LARAVEL_VERSION otimizado
 - **Estrutura inicial** - Arquitetura base configurada e funcional
 
 #### 🏗️ Configurações Iniciais
-- **Laravel 12** - Framework mais recente e estável instalado
+- **$LARAVEL_VERSION** - Framework mais recente e estável instalado
 - **PHP 8.4** - Suporte à versão mais recente do PHP
 - **Docker + Laravel Sail** - Ambiente de desenvolvimento isolado configurado
 - **Análise Estática** - PHPStan + Psalm para detecção de bugs
