@@ -7,7 +7,6 @@ parameters:
         - .github
     excludePaths:
         - vendor
-        - node_modules
         - storage (?)
         - bootstrap/cache (?)
     ignoreErrors: []

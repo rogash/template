@@ -7,11 +7,9 @@ help: ## Mostra esta ajuda
 	@echo ""
 	@echo "📚 Para mais informações, consulte o README.md"
 
-install: ## Instala dependências PHP e Node.js
+install: ## Instala dependências PHP
 	@echo "📦 Instalando dependências PHP..."
 	composer install
-	@echo "📦 Instalando dependências Node.js..."
-	npm install
 	@echo "✅ Dependências instaladas!"
 
 setup: ## Configuração inicial do projeto
@@ -79,13 +77,7 @@ sail-artisan: ## Executa comando Artisan via Docker
 	@echo "🔧 Executando comando Artisan..."
 	./vendor/bin/sail artisan $(command)
 
-watch: ## Inicia Vite em modo watch (apenas quando Laravel estiver instalado)
-	@echo "👀 Iniciando Vite em modo watch..."
-	@if [ -f "artisan" ]; then npm run dev; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
-
-build: ## Compila assets para produção (apenas quando Laravel estiver instalado)
-	@echo "🏗️ Compilando assets..."
-	@if [ -f "artisan" ]; then npm run build; else echo "⚠️ Laravel não instalado. Execute ./scripts/create-project.sh primeiro."; fi
+# Comandos de frontend removidos - este template foca em qualidade de código PHP
 
 cache-clear: ## Limpa todos os caches (apenas quando Laravel estiver instalado)
 	@echo "🧹 Limpando caches..."
