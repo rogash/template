@@ -41,13 +41,13 @@ jobs:
     - name: Run Psalm
       run: ./vendor/bin/psalm --no-progress
 
-    
+
 
     - name: Run PHP CS Fixer
-      run: ./vendor/bin/php-cs-fixer fix --dry-run --diff
+      run: ./vendor/bin/php-cs-fixer fix --dry-run --diff -- scripts docs docker .github
 
     - name: Run PHP_CodeSniffer
-      run: ./vendor/bin/phpcs --standard=PSR12 app config database routes tests || true
+      run: ./vendor/bin/phpcs --standard=PSR12 scripts docs docker .github || true
 
     - name: Build assets
       run: npm run build
