@@ -149,12 +149,6 @@ parameters:
         - storage
         - bootstrap/cache
     ignoreErrors:
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Collection::#'
-        - '#Call to an undefined method Illuminate\\Support\\Collection::#'
-        - '#Call to an undefined method Illuminate\\Http\\Request::#'
-        - '#Call to an undefined method Illuminate\\Http\\Response::#'
 EOF
 
     # Create psalm.xml for Laravel
