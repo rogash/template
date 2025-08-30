@@ -62,17 +62,24 @@ template/
 ├── .github/          # GitHub Actions
 ├── composer.json     # Dependências das ferramentas (PHPStan, Psalm, etc.)
 ├── package.json      # Dependências Node.js
-├── phpstan.neon      # Configuração PHPStan
-├── psalm.xml         # Configuração Psalm
+├── phpstan.neon      # Configuração PHPStan para template
+├── psalm.xml         # Configuração Psalm para template
 ├── .cursorrules      # Regras para IA
 └── README.md         # Esta documentação
 ```
+
+**🔧 Configurações Automáticas:**
+- **Template**: Configurações para arquivos do template
+- **Projetos Criados**: Configurações automaticamente ajustadas para Laravel
+- **Sem Intervenção Manual**: Tudo funciona "out of the box"
 
 **✅ Vantagens:**
 - Template limpo e organizado
 - Fácil de manter e atualizar
 - Não interfere com projetos criados
 - Permite reutilização infinita
+- **Repositórios independentes** - Cada projeto tem seu próprio Git
+- **Histórico limpo** - Sem herança do template
 
 ### **Opção 2: Instalar Laravel no Template Atual**
 

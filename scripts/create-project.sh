@@ -97,11 +97,9 @@ if [ $? -eq 0 ]; then
     if [ -n "$TEMPLATE_DIR" ] && [ -d "$TEMPLATE_DIR" ]; then
         echo -e "${GREEN}✅ Template encontrado em: $TEMPLATE_DIR${NC}"
 
-        # Copy template files
-        cp -r "$TEMPLATE_DIR/.git" . 2>/dev/null || true
+        # Copy template files (excluding .git for clean repository)
         cp "$TEMPLATE_DIR/README.md" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/Makefile" . 2>/dev/null || true
-                cp "$TEMPLATE_DIR/phpstan.neon" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/pint.json" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/phpcs.xml" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.eslintrc.js" . 2>/dev/null || true
@@ -137,6 +135,85 @@ if [ $? -eq 0 ]; then
     composer install --no-interaction
     npm install
 
+    # Create Laravel-specific configurations
+    echo -e "${BLUE}⚙️  Criando configurações para Laravel...${NC}"
+
+    # Create phpstan.neon for Laravel
+    cat > phpstan.neon << 'EOF'
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    excludePaths:
+        - app/Console/Kernel.php
+        - app/Exceptions/Handler.php
+        - app/Http/Kernel.php
+        - app/Providers/AppServiceProvider.php
+        - app/Providers/AuthServiceProvider.php
+        - app/Providers/EventServiceProvider.php
+        - app/Providers/RouteServiceProvider.php
+    ignoreErrors:
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
+EOF
+
+    # Create psalm.xml for Laravel
+    cat > psalm.xml << 'EOF'
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorLevel="4"
+    resolveFromConfigFile="true"
+    findUnusedCode="false"
+>
+    <projectFiles>
+        <directory name="app" />
+        <directory name="config" />
+        <directory name="database" />
+        <directory name="routes" />
+        <directory name="tests" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="node_modules" />
+            <directory name="storage" />
+            <directory name="bootstrap/cache" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <plugins>
+        <pluginClass class="Psalm\LaravelPlugin\Plugin" />
+    </plugins>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+        <MoreSpecificReturnType errorLevel="info" />
+        <MissingReturnType errorLevel="info" />
+        <MissingPropertyType errorLevel="info" />
+        <InvalidDocblock errorLevel="info" />
+        <MissingDependency errorLevel="info" />
+        <DeprecatedMethod errorLevel="info" />
+        <UndefinedGlobalVariable errorLevel="suppress" />
+        <MixedAssignment errorLevel="info" />
+        <MixedArgument errorLevel="info" />
+        <MixedArrayAccess errorLevel="info" />
+        <MixedMethodCall errorLevel="info" />
+        <MixedPropertyFetch errorLevel="info" />
+        <MixedReturnStatement errorLevel="info" />
+    </issueHandlers>
+</psalm>
+EOF
+
+    echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"
+
     # Generate application key
     echo -e "${BLUE}🔑 Gerando chave da aplicação...${NC}"
     php artisan key:generate --no-interaction
@@ -144,6 +221,19 @@ if [ $? -eq 0 ]; then
     # Set permissions
     echo -e "${BLUE}🔐 Configurando permissões...${NC}"
     chmod -R 755 storage bootstrap/cache
+
+    # Initialize new Git repository
+    echo -e "${BLUE}📝 Inicializando novo repositório Git...${NC}"
+    git init
+    git add .
+    git commit -m "feat: projeto Laravel inicial criado a partir do template
+
+- Laravel 12 instalado e configurado
+- Ferramentas de qualidade configuradas
+- Estrutura de projeto organizada
+- Configurações Docker e CI/CD incluídas"
+
+    echo -e "${GREEN}✅ Repositório Git inicializado com commit inicial${NC}"
 
     echo -e "\n${GREEN}🎉 Projeto '$PROJECT_NAME' criado com sucesso!${NC}"
     echo -e "${BLUE}📍 Localização: ${GREEN}$(pwd)${NC}"

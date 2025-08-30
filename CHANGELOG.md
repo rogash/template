@@ -23,7 +23,9 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **LICENSE não copiada** - Permite projetos comerciais com licenças próprias
 - **Stability**: Mudado de `dev` para `stable` - apenas versões maduras
 - **Template limpo** - composer.json separado das dependências do Laravel
-- **CI/CD otimizado** - GitHub Actions focado nas ferramentas do template
+- **CI/CD otimizado** - GitHub Actions focado nas ferramentas do template (sem Pint)
+- **Configurações automáticas** - PHPStan e Psalm configurados automaticamente para Laravel
+- **Repositórios independentes** - Cada projeto tem seu próprio Git sem herança do template
 - **CI/CD**: Corrigido GitHub Actions para usar package-lock.json e ferramentas Composer
 
 #### 📚 Documentação
