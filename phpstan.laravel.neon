@@ -1,14 +1,18 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
 parameters:
     level: 8
     paths:
-        - scripts
-        - docs
-        - docker
-        - .github
+        - app
+        - config
+        - database
+        - routes
+        - tests
     excludePaths:
         - vendor
-        - storage (?)
-        - bootstrap/cache (?)
+        - storage
+        - bootstrap/cache
     ignoreErrors:
         # Laravel Eloquent method calls (dynamic methods)
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'

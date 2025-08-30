@@ -76,7 +76,8 @@ if [ $? -eq 0 ]; then
         cp "$TEMP_DIR/template_backup/composer.json" . 2>/dev/null || true
         cp "$TEMP_DIR/template_backup/package.json" . 2>/dev/null || true
         cp "$TEMP_DIR/template_backup/Makefile" . 2>/dev/null || true
-        cp "$TEMP_DIR/template_backup/phpstan.neon" . 2>/dev/null || true
+        # Copy Laravel-specific PHPStan config
+        cp "$TEMP_DIR/template_backup/phpstan.laravel.neon" ./phpstan.neon 2>/dev/null || true
         cp "$TEMP_DIR/template_backup/pint.json" . 2>/dev/null || true
         cp "$TEMP_DIR/template_backup/phpcs.xml" . 2>/dev/null || true
         cp "$TEMP_DIR/template_backup/.eslintrc.js" . 2>/dev/null || true
