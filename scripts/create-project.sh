@@ -105,7 +105,7 @@ if [ $? -eq 0 ]; then
         cp "$TEMPLATE_DIR/.eslintrc.js" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.prettierrc" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/tsconfig.json" . 2>/dev/null || true
-        cp "$TEMPLATE_DIR/vite.config.js" . 2>/dev/null || true
+        # Vite config será criado especificamente para Laravel
         cp "$TEMPLATE_DIR/tailwind.config.js" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/postcss.config.js" . 2>/dev/null || true
         cp "$TEMPLATE_DIR/.editorconfig" . 2>/dev/null || true
@@ -210,6 +210,41 @@ EOF
         <MixedReturnStatement errorLevel="info" />
     </issueHandlers>
 </psalm>
+EOF
+
+    # Create Vite config for Laravel
+    cat > vite.config.js << 'EOF'
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
+    ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+            '~': '/resources',
+        },
+    },
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+    },
+});
 EOF
 
     echo -e "${GREEN}✅ Configurações para Laravel criadas${NC}"

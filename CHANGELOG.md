@@ -24,6 +24,8 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 - **Stability**: Mudado de `dev` para `stable` - apenas versões maduras
 - **Template limpo** - composer.json separado das dependências do Laravel
 - **CI/CD otimizado** - GitHub Actions focado nas ferramentas do template (sem Pint, caminhos corretos, configuração PHP CS Fixer, extensões otimizadas)
+- **Dependências atualizadas** - Vite 7.x, Vue 3.4.x, TypeScript 5.4.x, compatibilidade corrigida
+- **Vite config otimizado** - Template com build funcional, projetos com configuração Laravel
 - **Configurações automáticas** - PHPStan e Psalm configurados automaticamente para Laravel
 - **Repositórios independentes** - Cada projeto tem seu próprio Git sem herança do template
 - **CI/CD**: Corrigido GitHub Actions para usar package-lock.json e ferramentas Composer
